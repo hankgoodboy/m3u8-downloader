@@ -1,0 +1,745 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <!-- Primary SEO -->
+    <title>M3U8技术文档与教程 - 专业的HLS流媒体解决方案</title>
+    <meta content="M3U8教程, HLS流媒体, 视频下载技术, M3U8解析, 流媒体技术博客, 视频处理教程" name="keywords" />
+    <meta content="专业的M3U8技术文档与教程博客，提供最新的HLS流媒体技术分析、视频下载解决方案和实用工具指南。持续更新技术文章，助力开发者掌握流媒体技术。" name="description" />
+    <meta content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1" name="robots">
+    
+    <!-- 结构化数据 -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "Blog",
+        "name": "M3U8技术文档与教程",
+        "description": "专业的M3U8技术文档与教程博客",
+        "url": "https://m3u8downloader.com/documentation.html",
+        "author": {
+            "@type": "Organization",
+            "name": "M3U8 Downloader Team"
+        },
+        "publisher": {
+            "@type": "Organization",
+            "name": "M3U8 Downloader",
+            "logo": {
+                "@type": "ImageObject",
+                "url": "https://m3u8downloader.com/assets/img/logo.webp"
+            }
+        }
+    }
+    </script>
+    
+    <!-- RSS Feed -->
+    <link rel="alternate" type="application/rss+xml" title="M3U8技术文档RSS订阅" href="/rss.xml">
+    <!-- Favicons -->
+    <link rel="icon" type="image/png" sizes="96x96" href="https://www.m3u8dl.org/favicon-96x96.png">
+    <link rel="icon" type="image/svg+xml" href="https://www.m3u8dl.org/favicon.svg">
+    <link rel="shortcut icon" href="https://www.m3u8dl.org/favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://www.m3u8dl.org/apple-touch-icon.png">
+    <link rel="manifest" href="https://www.m3u8dl.org/site.webmanifest">
+
+    <!-- Theme -->
+    <meta content="#1a73e8" name="theme-color">
+    <meta content="M3U8 Downloader" name="application-name" />
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+
+
+    <!-- AdSense (kept in <head> as required) -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1086484173623075" crossorigin="anonymous"></script>
+
+    <script src="https://analytics.ahrefs.com/analytics.js" data-key="gqV9g+cYDujAmwBi6s+KNA" async></script>
+
+    <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "tbxvm2mrdv");
+    </script>   
+
+</head>
+
+<body class="bg-gradient-to-br from-green-50 to-blue-50 min-h-screen">
+    <!-- 导航栏 -->
+    <nav class="bg-white shadow-sm border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <!-- Logo -->
+                    <div class="flex-shrink-0 flex items-center">
+                        <img alt="M3U8DL Logo" class="w-8 h-8 mr-3"
+                            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                            src="https://www.m3u8dl.org/assets/img/logo.webp" />
+                        <div class="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center mr-3"
+                            style="display:none;">
+                            <i class="fas fa-play text-white text-sm"></i>
+                        </div>
+                        <a href="https://www.m3u8dl.org/index.html" class="text-xl font-bold text-gray-900 hover:text-green-600 transition-colors">M3U8 Downloader</a>
+                    </div>
+                </div>
+                <!-- Navigation Links -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="https://www.m3u8dl.org/index.html" class="flex items-center text-gray-700 hover:text-green-600 px-3 py-2 text-sm font-medium transition-colors">
+                        <i class="fas fa-home mr-2"></i>首页
+                    </a>
+                    <a href="https://www.m3u8dl.org/m3u8-player.html" class="flex items-center text-gray-700 hover:text-green-600 px-3 py-2 text-sm font-medium transition-colors">
+                        <i class="fas fa-play mr-2"></i>M3U8 播放器
+                    </a>
+                    <a href="https://www.m3u8dl.org/m3u8-parser.html" class="flex items-center text-gray-700 hover:text-green-600 px-3 py-2 text-sm font-medium transition-colors">
+                        <i class="fas fa-search mr-2"></i>M3U8 解析
+                    </a>
+                    <a href="https://www.m3u8dl.org/documentation.html" class="flex items-center text-green-600 px-3 py-2 text-sm font-medium border-b-2 border-green-600">
+                        <i class="fas fa-book mr-2"></i>文档
+                    </a>
+                    <!-- Language Switcher -->
+                    <div class="relative">
+                        <button id="languageToggle" class="flex items-center text-gray-700 hover:text-green-600 px-3 py-2 text-sm font-medium transition-colors">
+                            <i class="fas fa-globe mr-2"></i>
+                            <span>中文</span>
+                            <i class="fas fa-chevron-down ml-1 text-xs"></i>
+                        </button>
+                        <div id="languageDropdown" class="absolute right-0 mt-2 w-32 bg-white rounded-md shadow-lg py-1 z-50 hidden">
+                            <a href="#" class="block px-4 py-2 text-sm text-green-600 bg-green-50">中文</a>
+                            <a href="https://www.m3u8dl.org/en/documentation.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">English</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Mobile menu button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobileMenuToggle" class="text-gray-700 hover:text-green-600 focus:outline-none">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile menu -->
+        <div id="mobileMenu" class="md:hidden bg-white border-t border-gray-200 hidden">
+            <div class="px-2 pt-2 pb-3 space-y-1">
+                <a href="https://www.m3u8dl.org/index.html" class="block px-3 py-2 text-gray-700 hover:text-green-600 text-sm font-medium">首页</a>
+                <a href="https://www.m3u8dl.org/m3u8-player.html" class="block px-3 py-2 text-gray-700 hover:text-green-600 text-sm font-medium">M3U8 播放器</a>
+                <a href="https://www.m3u8dl.org/m3u8-parser.html" class="block px-3 py-2 text-gray-700 hover:text-green-600 text-sm font-medium">M3U8 解析</a>
+                <a href="https://www.m3u8dl.org/documentation.html" class="block px-3 py-2 text-green-600 text-sm font-medium bg-green-50">文档</a>
+                <div class="border-t border-gray-200 pt-2">
+                    <a href="https://www.m3u8dl.org/en/documentation.html" class="block px-3 py-2 text-gray-700 hover:text-green-600 text-sm font-medium">English</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主要内容 -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+
+        <!-- 页面标题 -->
+        <div class="text-center mb-12">
+            <h1 class="text-4xl font-bold text-gray-900 mb-4">
+                <i class="fas fa-book text-green-600 mr-3"></i>
+                M3U8技术文档与教程
+            </h1>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">专业的HLS流媒体技术分析与实用工具指南，持续更新最新技术文章</p>
+        </div>
+
+        <!-- 文章分类和搜索 -->
+        <div class="mb-8">
+            <div class="flex flex-col md:flex-row md:items-center md:justify-between">
+                <div class="flex flex-wrap gap-2 mb-4 md:mb-0">
+                    <button class="category-filter active px-4 py-2 text-sm font-medium rounded-full bg-green-600 text-white" data-category="all">
+                        全部文章
+                    </button>
+                    <button class="category-filter px-4 py-2 text-sm font-medium rounded-full bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors" data-category="tutorial">
+                        使用教程
+                    </button>
+                    <button class="category-filter px-4 py-2 text-sm font-medium rounded-full bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors" data-category="technical">
+                        技术分析
+                    </button>
+                    <button class="category-filter px-4 py-2 text-sm font-medium rounded-full bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors" data-category="tools">
+                        工具介绍
+                    </button>
+                    <button class="category-filter px-4 py-2 text-sm font-medium rounded-full bg-gray-100 text-gray-700 hover:bg-gray-200 transition-colors" data-category="updates">
+                        更新日志
+                    </button>
+                </div>
+                <div class="relative">
+                    <input type="text" id="searchInput" placeholder="搜索文章..." class="pl-10 pr-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                    <i class="fas fa-search absolute left-3 top-3 text-gray-400"></i>
+                </div>
+            </div>
+        </div>
+
+        <!-- 文章列表 -->
+        <div id="articlesList" class="grid gap-8 mb-12">
+            <!-- 中文文章 -->
+            <div class="article-card bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300" data-category="technical">
+                <div class="p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="px-3 py-1 text-xs font-medium bg-blue-100 text-blue-800 rounded-full">技术分析</span>
+                        <span class="text-sm text-gray-500">2025-01-20</span>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-3 hover:text-green-600 transition-colors">
+                        <a href="https://www.m3u8dl.org/articles/1000.html">什么是M3U8格式？M3U8视频格式详解</a>
+                    </h3>
+                    <p class="text-gray-600 mb-4">深入了解 M3U8 格式：作为 HTTP Live Streaming (HLS) 播放列表的核心标准，它具备灵活高效的特点和优势，被广泛应用于视频点播、直播及流媒体传输场景。</p>
+                    <div class="flex items-center justify-between">
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-2 py-1 text-xs bg-gray-100 text-gray-600 rounded">M3U8格式</span>
+                            <span class="px-2 py-1 text-xs bg-gray-100 text-gray-600 rounded">HLS流媒体</span>
+                        </div>
+                        <a href="https://www.m3u8dl.org/articles/1000.html" class="text-green-600 hover:text-green-700 font-medium text-sm">阅读更多 →</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="article-card bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300" data-category="tutorial">
+                <div class="p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="px-3 py-1 text-xs font-medium bg-green-100 text-green-800 rounded-full">使用教程</span>
+                        <span class="text-sm text-gray-500">2025-01-20</span>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-3 hover:text-green-600 transition-colors">
+                        <a href="https://www.m3u8dl.org/articles/1001.html">视频下载法律指南 - 版权法与合理使用详解</a>
+                    </h3>
+                    <p class="text-gray-600 mb-4">详细解读视频下载的法律问题：版权法规定、合理使用原则、M3U8下载的法律风险。了解如何合法合规地下载视频内容。</p>
+                    <div class="flex items-center justify-between">
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-2 py-1 text-xs bg-gray-100 text-gray-600 rounded">版权法</span>
+                            <span class="px-2 py-1 text-xs bg-gray-100 text-gray-600 rounded">合理使用</span>
+                        </div>
+                        <a href="https://www.m3u8dl.org/articles/1001.html" class="text-green-600 hover:text-green-700 font-medium text-sm">阅读更多 →</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="article-card bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300" data-category="tutorial">
+                <div class="p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="px-3 py-1 text-xs font-medium bg-green-100 text-green-800 rounded-full">使用教程</span>
+                        <span class="text-sm text-gray-500">2025-01-20</span>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-3 hover:text-green-600 transition-colors">
+                        <a href="https://www.m3u8dl.org/articles/1002.html">M3U8转MP4完整指南 - M3U8流媒体转换教程</a>
+                    </h3>
+                    <p class="text-gray-600 mb-4">详细介绍如何将M3U8流媒体转换为MP4格式，包括M3U8下载器使用、转换工具推荐和最佳实践方法。</p>
+                    <div class="flex items-center justify-between">
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-2 py-1 text-xs bg-gray-100 text-gray-600 rounded">M3U8转MP4</span>
+                            <span class="px-2 py-1 text-xs bg-gray-100 text-gray-600 rounded">视频转换</span>
+                        </div>
+                        <a href="https://www.m3u8dl.org/articles/1002.html" class="text-green-600 hover:text-green-700 font-medium text-sm">阅读更多 →</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="article-card bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300" data-category="tools">
+                <div class="p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="px-3 py-1 text-xs font-medium bg-purple-100 text-purple-800 rounded-full">工具介绍</span>
+                        <span class="text-sm text-gray-500">2025-01-20</span>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-3 hover:text-green-600 transition-colors">
+                        <a href="https://www.m3u8dl.org/articles/1003.html">M3U8在线下载器 - 最佳免费视频流下载工具</a>
+                    </h3>
+                    <p class="text-gray-600 mb-4">最佳免费在线M3U8下载器，将视频流转换为MP4。快速、可靠的HLS下载，无需安装软件。</p>
+                    <div class="flex items-center justify-between">
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-2 py-1 text-xs bg-gray-100 text-gray-600 rounded">在线下载器</span>
+                            <span class="px-2 py-1 text-xs bg-gray-100 text-gray-600 rounded">免费工具</span>
+                        </div>
+                        <a href="https://www.m3u8dl.org/articles/1003.html" class="text-green-600 hover:text-green-700 font-medium text-sm">阅读更多 →</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 英文文章 -->
+            <div class="article-card bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300" data-category="tutorial">
+                <div class="p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="px-3 py-1 text-xs font-medium bg-green-100 text-green-800 rounded-full">使用教程</span>
+                        <span class="text-sm text-gray-500">2025-01-20</span>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-3 hover:text-green-600 transition-colors">
+                        <a href="https://www.m3u8dl.org/articles/1004.html">M3U8 101: A Friendly Guide to HLS Playlists, Players, and Practical Download Tips</a>
+                    </h3>
+                    <p class="text-gray-600 mb-4">M3U8和HLS的简单指南：何时使用在线工具或VLC，以及安全、简单视频下载的最佳实践。</p>
+                    <div class="flex items-center justify-between">
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-2 py-1 text-xs bg-gray-100 text-gray-600 rounded">M3U8</span>
+                            <span class="px-2 py-1 text-xs bg-gray-100 text-gray-600 rounded">HLS</span>
+                        </div>
+                        <a href="https://www.m3u8dl.org/articles/1004.html" class="text-green-600 hover:text-green-700 font-medium text-sm">阅读更多 →</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="article-card bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300" data-category="tools">
+                <div class="p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="px-3 py-1 text-xs font-medium bg-purple-100 text-purple-800 rounded-full">工具介绍</span>
+                        <span class="text-sm text-gray-500">2025-01-20</span>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-3 hover:text-green-600 transition-colors">
+                        <a href="https://www.m3u8dl.org/articles/1005.html">Video Downloader M3U8 - Complete Guide</a>
+                    </h3>
+                    <p class="text-gray-600 mb-4">M3U8视频下载器实用指南：何时使用在线工具以及VLC如何帮助轻松管理HLS流。</p>
+                    <div class="flex items-center justify-between">
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-2 py-1 text-xs bg-gray-100 text-gray-600 rounded">视频下载器</span>
+                            <span class="px-2 py-1 text-xs bg-gray-100 text-gray-600 rounded">M3U8</span>
+                        </div>
+                        <a href="https://www.m3u8dl.org/articles/1005.html" class="text-green-600 hover:text-green-700 font-medium text-sm">阅读更多 →</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="article-card bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300" data-category="tools">
+                <div class="p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="px-3 py-1 text-xs font-medium bg-purple-100 text-purple-800 rounded-full">工具介绍</span>
+                        <span class="text-sm text-gray-500">2025-01-20</span>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-3 hover:text-green-600 transition-colors">
+                        <a href="https://www.m3u8dl.org/articles/1006.html">HLS Downloader - Complete Guide</a>
+                    </h3>
+                    <p class="text-gray-600 mb-4">学习如何使用在线M3U8下载器和VLC等工具快速轻松地下载和管理HLS流媒体视频。</p>
+                    <div class="flex items-center justify-between">
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-2 py-1 text-xs bg-gray-100 text-gray-600 rounded">HLS下载器</span>
+                            <span class="px-2 py-1 text-xs bg-gray-100 text-gray-600 rounded">VLC</span>
+                        </div>
+                        <a href="https://www.m3u8dl.org/articles/1006.html" class="text-green-600 hover:text-green-700 font-medium text-sm">阅读更多 →</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="article-card bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300" data-category="tutorial">
+                <div class="p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="px-3 py-1 text-xs font-medium bg-green-100 text-green-800 rounded-full">使用教程</span>
+                        <span class="text-sm text-gray-500">2025-01-20</span>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-3 hover:text-green-600 transition-colors">
+                        <a href="https://www.m3u8dl.org/articles/1007.html">Convert M3U8 to MP4 - Complete Guide</a>
+                    </h3>
+                    <p class="text-gray-600 mb-4">M3U8转MP4的自然实用指南。学习如何使用M3U8下载器、VLC媒体播放器和其他工具保存和管理流媒体视频。</p>
+                    <div class="flex items-center justify-between">
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-2 py-1 text-xs bg-gray-100 text-gray-600 rounded">M3U8转MP4</span>
+                            <span class="px-2 py-1 text-xs bg-gray-100 text-gray-600 rounded">视频转换</span>
+                        </div>
+                        <a href="https://www.m3u8dl.org/articles/1007.html" class="text-green-600 hover:text-green-700 font-medium text-sm">阅读更多 →</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="article-card bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300" data-category="tutorial">
+                <div class="p-6">
+                    <div class="flex items-center justify-between mb-4">
+                        <span class="px-3 py-1 text-xs font-medium bg-green-100 text-green-800 rounded-full">使用教程</span>
+                        <span class="text-sm text-gray-500">2025-01-20</span>
+                    </div>
+                    <h3 class="text-xl font-semibold text-gray-900 mb-3 hover:text-green-600 transition-colors">
+                        <a href="https://www.m3u8dl.org/articles/1008.html">Convert M3U8 to TS - Complete Guide</a>
+                    </h3>
+                    <p class="text-gray-600 mb-4">M3U8转TS的实用指南。学习如何使用M3U8下载器、VLC媒体播放器和其他工具将HLS流保存为TS文件而不损失质量。</p>
+                    <div class="flex items-center justify-between">
+                        <div class="flex flex-wrap gap-2">
+                            <span class="px-2 py-1 text-xs bg-gray-100 text-gray-600 rounded">M3U8转TS</span>
+                            <span class="px-2 py-1 text-xs bg-gray-100 text-gray-600 rounded">视频转换</span>
+                        </div>
+                        <a href="https://www.m3u8dl.org/articles/1008.html" class="text-green-600 hover:text-green-700 font-medium text-sm">阅读更多 →</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 分页导航 -->
+        <div id="paginationNav" class="flex justify-center items-center space-x-2 mt-8" style="display: none;">
+            <button id="prevPage" class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed">
+                <i class="fas fa-chevron-left mr-1"></i>上一页
+            </button>
+            <div id="pageNumbers" class="flex space-x-1">
+                <!-- 页码将在这里动态生成 -->
+            </div>
+            <button id="nextPage" class="px-4 py-2 text-sm font-medium text-gray-700 bg-white border border-gray-300 rounded-lg hover:bg-gray-50 disabled:opacity-50 disabled:cursor-not-allowed">
+                下一页<i class="fas fa-chevron-right ml-1"></i>
+            </button>
+        </div>
+
+    </main>
+
+    <!-- 网站页脚 -->
+    <footer class="text-gray-700 py-6" style="background-color: #f4f4f4;">
+        <div class="container mx-auto px-4">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <div class="mb-4 md:mb-0">
+                    <p>&copy; 2025 M3U8 Downloader. All rights reserved.</p>
+                </div>
+                <div class="flex space-x-6">
+                    <a href="https://www.m3u8dl.org/privacy-policy.html" class="hover:text-blue-600 transition-colors">隐私声明</a>
+                    <a href="https://www.m3u8dl.org/terms-conditions.html" class="hover:text-blue-600 transition-colors">条款和条件</a>
+                    <a href="https://www.m3u8dl.org/contact-us.html" class="hover:text-blue-600 transition-colors">联系我们</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // 移动端菜单功能
+        document.addEventListener('DOMContentLoaded', function () {
+            const mobileMenuButton = document.getElementById('mobileMenuToggle');
+            const mobileMenu = document.getElementById('mobileMenu');
+
+            if (mobileMenuButton && mobileMenu) {
+                mobileMenuButton.addEventListener('click', function () {
+                    mobileMenu.classList.toggle('hidden');
+                });
+            }
+
+            // 语言切换下拉菜单功能
+            const languageButton = document.getElementById('languageToggle');
+            const languageMenu = document.getElementById('languageDropdown');
+
+            if (languageButton && languageMenu) {
+                languageButton.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    languageMenu.classList.toggle('hidden');
+                });
+
+                document.addEventListener('click', function () {
+                    if (!languageMenu.classList.contains('hidden')) {
+                        languageMenu.classList.add('hidden');
+                    }
+                });
+
+                languageMenu.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                });
+            }
+
+            // 平滑滚动到锚点
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+        });
+
+        // FAQ 切换功能
+        function toggleFAQ(button) {
+            const content = button.nextElementSibling;
+            const icon = button.querySelector('i');
+            
+            content.classList.toggle('hidden');
+            icon.classList.toggle('rotate-180');
+        }
+
+        // 文章筛选功能
+        const categoryFilters = document.querySelectorAll('.category-filter');
+        const searchInput = document.getElementById('searchInput');
+        const articleCards = document.querySelectorAll('.article-card');
+        const subscribeBtn = document.getElementById('subscribeBtn');
+
+        // 只有当元素存在时才添加事件监听器
+        if (searchInput) {
+            // 分页相关变量
+            let currentPage = 1;
+            const articlesPerPage = 5; // 每页显示5篇文章
+            let filteredArticles = Array.from(articleCards);
+
+        // 分页计算功能
+        function calculatePagination() {
+            const totalArticles = filteredArticles.length;
+            const totalPages = Math.ceil(totalArticles / articlesPerPage);
+            return { totalArticles, totalPages };
+        }
+
+        // 显示当前页的文章
+        function showCurrentPageArticles() {
+            const startIndex = (currentPage - 1) * articlesPerPage;
+            const endIndex = startIndex + articlesPerPage;
+            
+            // 隐藏所有文章
+            articleCards.forEach(card => card.style.display = 'none');
+            
+            // 显示当前页的文章
+            filteredArticles.slice(startIndex, endIndex).forEach(card => {
+                card.style.display = 'block';
+            });
+            
+            // 渲染分页
+            const { totalPages } = calculatePagination();
+            renderPagination(totalPages);
+        }
+
+        // 创建页码按钮
+        function createPageButton(pageNum, isActive = false) {
+            const button = document.createElement('button');
+            button.className = `px-3 py-2 text-sm font-medium rounded-lg transition-colors ${
+                isActive 
+                    ? 'bg-green-600 text-white' 
+                    : 'text-gray-700 bg-white border border-gray-300 hover:bg-gray-50'
+            }`;
+            button.textContent = pageNum;
+            button.addEventListener('click', () => {
+                currentPage = pageNum;
+                showCurrentPageArticles();
+                // 滚动到文章列表顶部
+                document.getElementById('articlesList').scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'start' 
+                });
+            });
+            return button;
+        }
+
+        // 渲染分页导航
+        function renderPagination(totalPages) {
+            const paginationNav = document.getElementById('paginationNav');
+            const pageNumbers = document.getElementById('pageNumbers');
+            
+            if (totalPages <= 1) {
+                paginationNav.style.display = 'none';
+                return;
+            }
+            
+            paginationNav.style.display = 'flex';
+            pageNumbers.innerHTML = '';
+            
+            // 显示逻辑：最多显示5个页码
+            let startPage = Math.max(1, currentPage - 2);
+            let endPage = Math.min(totalPages, startPage + 4);
+            
+            // 调整范围以确保显示5个页码（如果可能）
+            if (endPage - startPage < 4) {
+                startPage = Math.max(1, endPage - 4);
+            }
+            
+            // 显示第一页
+            if (startPage > 1) {
+                pageNumbers.appendChild(createPageButton(1));
+                if (startPage > 2) {
+                    const ellipsis = document.createElement('span');
+                    ellipsis.className = 'px-3 py-2 text-gray-500';
+                    ellipsis.textContent = '...';
+                    pageNumbers.appendChild(ellipsis);
+                }
+            }
+            
+            // 显示中间页码
+            for (let i = startPage; i <= endPage; i++) {
+                pageNumbers.appendChild(createPageButton(i, i === currentPage));
+            }
+            
+            // 显示最后一页
+            if (endPage < totalPages) {
+                if (endPage < totalPages - 1) {
+                    const ellipsis = document.createElement('span');
+                    ellipsis.className = 'px-3 py-2 text-gray-500';
+                    ellipsis.textContent = '...';
+                    pageNumbers.appendChild(ellipsis);
+                }
+                pageNumbers.appendChild(createPageButton(totalPages));
+            }
+            
+            // 更新上一页/下一页按钮状态
+            const prevButton = document.getElementById('prevPage');
+            const nextButton = document.getElementById('nextPage');
+            
+            prevButton.disabled = currentPage === 1;
+            nextButton.disabled = currentPage === totalPages;
+            
+            if (currentPage === 1) {
+                prevButton.classList.add('opacity-50', 'cursor-not-allowed');
+            } else {
+                prevButton.classList.remove('opacity-50', 'cursor-not-allowed');
+            }
+            
+            if (currentPage === totalPages) {
+                nextButton.classList.add('opacity-50', 'cursor-not-allowed');
+            } else {
+                nextButton.classList.remove('opacity-50', 'cursor-not-allowed');
+            }
+        }
+
+        // 上一页/下一页按钮事件
+        document.getElementById('prevPage').addEventListener('click', () => {
+            if (currentPage > 1) {
+                currentPage--;
+                showCurrentPageArticles();
+                document.getElementById('articlesList').scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'start' 
+                });
+            }
+        });
+
+        document.getElementById('nextPage').addEventListener('click', () => {
+            const { totalPages } = calculatePagination();
+            if (currentPage < totalPages) {
+                currentPage++;
+                showCurrentPageArticles();
+                document.getElementById('articlesList').scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'start' 
+                });
+            }
+        });
+
+        // 分类筛选
+        categoryFilters.forEach(filter => {
+            filter.addEventListener('click', function() {
+                // 更新按钮状态
+                categoryFilters.forEach(btn => {
+                    btn.classList.remove('active', 'bg-green-600', 'text-white');
+                    btn.classList.add('bg-gray-100', 'text-gray-700');
+                });
+                this.classList.remove('bg-gray-100', 'text-gray-700');
+                this.classList.add('active', 'bg-green-600', 'text-white');
+
+                const category = this.dataset.category;
+                filterArticles(category, searchInput.value);
+            });
+        });
+
+        // 搜索功能
+        if (searchInput) {
+            searchInput.addEventListener('input', function() {
+                const activeCategory = document.querySelector('.category-filter.active').dataset.category;
+                filterArticles(activeCategory, this.value);
+            });
+        }
+
+        // 筛选文章函数
+        function filterArticles(category, searchTerm) {
+            // 重置到第一页
+            currentPage = 1;
+            
+            // 筛选文章
+            filteredArticles = Array.from(articleCards).filter(card => {
+                const cardCategory = card.dataset.category;
+                const cardTitle = card.querySelector('h2').textContent.toLowerCase();
+                const cardContent = card.querySelector('p').textContent.toLowerCase();
+                
+                const matchesCategory = category === 'all' || cardCategory === category;
+                const matchesSearch = searchTerm === '' || 
+                    cardTitle.includes(searchTerm.toLowerCase()) || 
+                    cardContent.includes(searchTerm.toLowerCase());
+                
+                return matchesCategory && matchesSearch;
+            });
+            
+            // 显示当前页文章
+            showCurrentPageArticles();
+        }
+
+        // 初始化分页
+        function initializePagination() {
+            filteredArticles = Array.from(articleCards);
+            showCurrentPageArticles();
+        }
+
+        // 页面加载完成后初始化分页
+        document.addEventListener('DOMContentLoaded', function() {
+            initializePagination();
+        });
+
+        // 订阅功能
+        if (subscribeBtn) {
+            subscribeBtn.addEventListener('click', function() {
+                if ('Notification' in window) {
+                    Notification.requestPermission().then(function(permission) {
+                        if (permission === 'granted') {
+                            new Notification('订阅成功！', {
+                                body: '您将收到最新文章更新通知',
+                                icon: '/favicon.ico'
+                            });
+                            subscribeBtn.innerHTML = '<i class="fas fa-check mr-2"></i>已订阅';
+                            subscribeBtn.classList.add('bg-green-100', 'text-green-700');
+                        }
+                    });
+                } else {
+                    alert('您的浏览器不支持通知功能');
+                }
+            });
+        }
+
+        // 添加动画样式
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes fadeIn {
+                from { opacity: 0; transform: translateY(20px); }
+                to { opacity: 1; transform: translateY(0); }
+            }
+            .article-card {
+                transition: all 0.3s ease;
+            }
+            .article-card:hover {
+                transform: translateY(-2px);
+            }
+        `;
+        document.head.appendChild(style);
+
+        // 侧边栏活动section高亮
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('.sidebar a[href^="#"]');
+            
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('text-green-600', 'font-semibold');
+                link.classList.add('text-gray-600');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.remove('text-gray-600');
+                    link.classList.add('text-green-600', 'font-semibold');
+                }
+            });
+        });
+        } // 添加缺少的大括号来关闭 if (searchInput) 语句块
+    </script>
+
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+        import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-analytics.js";
+        // TODO: Add SDKs for Firebase products that you want to use
+        // https://firebase.google.com/docs/web/setup#available-libraries
+
+        // Your web app's Firebase configuration
+        // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+        const firebaseConfig = {
+            apiKey: "AIzaSyCGtjnKlH-INBZu-OBa3raT5c02OnKh5cg",
+            authDomain: "iconai-c9c47.firebaseapp.com",
+            projectId: "iconai-c9c47",
+            storageBucket: "iconai-c9c47.firebasestorage.app",
+            messagingSenderId: "550227159978",
+            appId: "1:550227159978:web:31b1534bea0d2282c3d9d3",
+            measurementId: "G-00L6P3TD5P"
+        };
+
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        const analytics = getAnalytics(app);
+    </script>
+</body>
+
+</html>

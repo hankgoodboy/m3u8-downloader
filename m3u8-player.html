@@ -1,0 +1,550 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <!-- Primary SEO -->
+    <title>M3U8播放器 - M3U8 Downloader</title>
+    <meta content="M3U8在线播放器, M3U8视频播放, 流媒体播放器, HLS播放器" name="keywords" />
+    <meta content="专业的M3U8在线播放器，支持HLS流媒体播放，无需下载即可在线观看M3U8视频内容。" name="description" />
+    <meta content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1" name="robots">
+    <!-- Favicons -->
+    <link href="https://www.m3u8dl.org/favicon-96x96.png" rel="icon" sizes="96x96" type="image/png" />
+    <link href="https://www.m3u8dl.org/favicon.svg" rel="icon" type="image/svg+xml" />
+    <link href="https://www.m3u8dl.org/favicon.ico" rel="shortcut icon" />
+    <link href="https://www.m3u8dl.org/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180" />
+    <link href="https://www.m3u8dl.org/site.webmanifest" rel="manifest" />
+    <!-- Theme -->
+    <meta content="#1a73e8" name="theme-color">
+    <meta content="M3U8 Downloader" name="application-name" />
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+    <!-- HLS.js -->
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+
+
+    <!-- AdSense (kept in <head> as required) -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1086484173623075" crossorigin="anonymous"></script>
+
+    <script src="https://analytics.ahrefs.com/analytics.js" data-key="gqV9g+cYDujAmwBi6s+KNA" async></script>
+
+    <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "tbxvm2mrdv");
+    </script>
+</head>
+
+<body class="bg-gray-50">
+    <!-- Navigation -->
+    <nav class="bg-white shadow-sm border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <!-- Logo -->
+                    <div class="flex-shrink-0 flex items-center">
+                        <img alt="M3U8DL Logo" class="w-8 h-8 mr-3"
+                            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                            src="https://www.m3u8dl.org/assets/img/logo.webp" />
+                        <div class="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center mr-3"
+                            style="display:none;">
+                            <i class="fas fa-play text-white text-sm"></i>
+                        </div>
+                        <a href="https://www.m3u8dl.org/index.html" class="text-xl font-bold text-gray-900 hover:text-green-600 transition-colors">M3U8 Downloader</a>
+                    </div>
+                </div>
+                <!-- Navigation Links -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="https://www.m3u8dl.org/index.html" class="text-gray-700 hover:text-green-600 px-3 py-2 text-sm font-medium transition-colors flex items-center">
+                        <i class="fas fa-home mr-2"></i>首页
+                    </a>
+                    <a href="https://www.m3u8dl.org/m3u8-player.html" class="text-green-600 px-3 py-2 text-sm font-medium border-b-2 border-green-600 flex items-center">
+                        <i class="fas fa-play-circle mr-2"></i>M3U8 播放器
+                    </a>
+                    <a href="https://www.m3u8dl.org/m3u8-parser.html" class="text-gray-700 hover:text-green-600 px-3 py-2 text-sm font-medium transition-colors flex items-center">
+                        <i class="fas fa-search mr-2"></i>M3U8 解析
+                    </a>
+                    <a href="https://www.m3u8dl.org/documentation.html" class="text-gray-700 hover:text-green-600 px-3 py-2 text-sm font-medium transition-colors flex items-center">
+                        <i class="fas fa-book mr-2"></i>文档
+                    </a>
+                    <!-- Language Switcher -->
+                    <div class="relative">
+                        <button id="languageToggle" class="flex items-center text-gray-700 hover:text-green-600 px-3 py-2 text-sm font-medium transition-colors">
+                            <i class="fas fa-globe mr-2"></i>
+                            <span>中文</span>
+                            <i class="fas fa-chevron-down ml-1 text-xs"></i>
+                        </button>
+                        <div id="languageDropdown" class="absolute right-0 mt-2 w-32 bg-white rounded-md shadow-lg py-1 z-50 hidden">
+                            <a href="#" class="block px-4 py-2 text-sm text-green-600 bg-green-50">中文</a>
+                            <a href="https://www.m3u8dl.org/en/m3u8-player.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">English</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Mobile menu button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobileMenuToggle" class="text-gray-700 hover:text-green-600 focus:outline-none">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+            
+            <!-- Mobile Menu -->
+            <div id="mobileMenu" class="md:hidden bg-white border-t border-gray-200 hidden">
+                <div class="px-4 py-2 space-y-1">
+                    <a href="https://www.m3u8dl.org/index.html" class="block px-3 py-2 text-gray-700 hover:text-green-600 text-sm font-medium flex items-center">
+                        <i class="fas fa-home mr-2"></i>首页
+                    </a>
+                    <a href="https://www.m3u8dl.org/m3u8-player.html" class="block px-3 py-2 text-green-600 text-sm font-medium bg-green-50 flex items-center">
+                        <i class="fas fa-play-circle mr-2"></i>M3U8 播放器
+                    </a>
+                    <a href="https://www.m3u8dl.org/m3u8-parser.html" class="block px-3 py-2 text-gray-700 hover:text-green-600 text-sm font-medium flex items-center">
+                        <i class="fas fa-search mr-2"></i>M3U8 解析
+                    </a>
+                    <a href="https://www.m3u8dl.org/documentation.html" class="block px-3 py-2 text-gray-700 hover:text-green-600 text-sm font-medium flex items-center">
+                        <i class="fas fa-book mr-2"></i>文档
+                    </a>
+                    <hr class="my-2">
+                    <a href="https://www.m3u8dl.org/en/m3u8-player.html" class="block px-3 py-2 text-gray-700 hover:text-green-600 text-sm">English</a>
+                    <a href="#" class="block px-3 py-2 text-green-600 text-sm bg-green-50">中文</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- 页面标题 -->
+        <div class="text-center mb-12">
+            <h1 class="text-4xl font-bold text-gray-900 mb-4">
+                <i class="fas fa-play-circle text-green-600 mr-3"></i>
+                M3U8 视频播放器
+            </h1>
+            <p class="text-xl text-gray-600 max-w-3xl mx-auto">专业的HLS视频播放器，支持自适应码率流、全屏播放和多种视频格式</p>
+        </div>
+
+        <!-- 播放器区域 -->
+        <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
+            <div class="mb-6">
+                <label for="m3u8Url" class="block text-sm font-medium text-gray-700 mb-2">
+                    <i class="fas fa-link mr-2 text-gray-500"></i>M3U8 视频链接
+                </label>
+                <div class="flex gap-3">
+                    <input type="url" id="m3u8Url" placeholder="请输入M3U8链接，按回车键或点击播放按钮开始..."
+                        class="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                    <button id="loadVideo" class="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-medium">
+                        <i class="fas fa-play mr-2"></i>播放
+                    </button>
+                </div>
+                <p class="text-sm text-gray-500 mt-2">
+                    支持以.m3u8结尾的HLS流媒体链接，输入后按回车键即可播放
+                    <button class="text-green-600 hover:underline ml-2" id="testLinkBtn" type="button">试试示例链接</button>
+                </p>
+            </div>
+
+            <!-- 视频播放器 -->
+            <div class="bg-black rounded-lg overflow-hidden mb-4" style="aspect-ratio: 16/9;">
+                <video id="videoPlayer" class="w-full h-full" controls poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 450'%3E%3Crect width='800' height='450' fill='%23000'/%3E%3Ctext x='400' y='225' text-anchor='middle' fill='%23fff' font-size='24' font-family='Arial'%3E点击"加载视频"开始播放%3C/text%3E%3C/svg%3E">
+                    您的浏览器不支持视频标签。
+                </video>
+            </div>
+
+            <!-- 播放器控制 -->
+            <div class="flex flex-wrap gap-3 justify-center">
+                <button id="playPauseBtn" class="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors" disabled>
+                    <i class="fas fa-play mr-2"></i>播放
+                </button>
+                <button id="fullscreenBtn" class="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors" disabled>
+                    <i class="fas fa-expand mr-2"></i>全屏
+                </button>
+                <button id="volumeBtn" class="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors" disabled>
+                    <i class="fas fa-volume-up mr-2"></i>音量
+                </button>
+            </div>
+
+            <!-- 加载状态 -->
+            <div id="loadingIndicator" class="text-center py-8 hidden">
+                <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-green-600 mb-4"></div>
+                <p class="text-gray-600">正在加载视频...</p>
+            </div>
+
+            <!-- 错误状态 -->
+            <div id="errorState" class="text-center py-8 text-red-600 hidden">
+                <i class="fas fa-exclamation-triangle text-4xl mb-4"></i>
+                <p id="errorMessage">视频加载失败，请检查链接后重试。</p>
+            </div>
+        </div>
+
+        <!-- 功能特性 -->
+        <div class="grid md:grid-cols-3 gap-8 mb-12">
+            <div class="bg-white rounded-lg shadow-lg p-6 text-center">
+                <div class="bg-green-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-play text-green-600 text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 mb-3">HLS 流媒体</h3>
+                <p class="text-gray-600">支持HTTP Live Streaming (HLS)协议，具备自适应码率流功能</p>
+            </div>
+            <div class="bg-white rounded-lg shadow-lg p-6 text-center">
+                <div class="bg-green-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-expand text-green-600 text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 mb-3">全屏支持</h3>
+                <p class="text-gray-600">支持全屏模式观看视频，提供完整的播放器控制功能</p>
+            </div>
+            <div class="bg-white rounded-lg shadow-lg p-6 text-center">
+                <div class="bg-purple-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
+                    <i class="fas fa-mobile-alt text-purple-600 text-2xl"></i>
+                </div>
+                <h3 class="text-xl font-semibold text-gray-900 mb-3">移动端友好</h3>
+                <p class="text-gray-600">针对移动设备优化，提供触控友好的操作界面</p>
+            </div>
+        </div>
+
+        <!-- 使用说明 -->
+        <div class="bg-white rounded-lg shadow-lg p-8">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6">使用说明</h2>
+            <div class="grid md:grid-cols-2 gap-8">
+                <div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">操作步骤</h3>
+                    <ol class="space-y-3">
+                        <li class="flex items-start">
+                            <span class="bg-green-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold mr-3 mt-0.5">1</span>
+                            <span class="text-gray-700">从视频源复制M3U8视频链接</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="bg-green-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold mr-3 mt-0.5">2</span>
+                            <span class="text-gray-700">将链接粘贴到上方的输入框中</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="bg-green-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold mr-3 mt-0.5">3</span>
+                            <span class="text-gray-700">按回车键或点击"播放"按钮开始播放</span>
+                        </li>
+                        <li class="flex items-start">
+                            <span class="bg-green-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold mr-3 mt-0.5">4</span>
+                            <span class="text-gray-700">使用播放器控制按钮进行播放、暂停或全屏操作</span>
+                        </li>
+                    </ol>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">提示与注意事项</h3>
+                    <ul class="space-y-3">
+                        <li class="flex items-start">
+                            <i class="fas fa-lightbulb text-yellow-500 mr-3 mt-1"></i>
+                            <span class="text-gray-700">确保M3U8链接可访问且未被CORS策略阻止</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-shield-alt text-green-500 mr-3 mt-1"></i>
+                            <span class="text-gray-700">建议使用HTTPS链接以获得更好的安全性</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-wifi text-green-500 mr-3 mt-1"></i>
+                            <span class="text-gray-700">需要稳定的网络连接以确保流畅播放</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fas fa-mobile-alt text-purple-500 mr-3 mt-1"></i>
+                            <span class="text-gray-700">支持所有现代浏览器和移动设备</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Website Footer -->
+    <footer class="text-gray-700 py-6" style="background-color: #f4f4f4;">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <!-- 左侧版权信息 -->
+                <div class="mb-4 md:mb-0">
+                    <p class="text-sm text-gray-600">
+                        © 2025 M3U8 Downloader. 安全简单的M3U8视频下载工具
+                    </p>
+                </div>
+                <!-- 右侧链接 -->
+                <div class="flex space-x-6">
+                    <a href="https://www.m3u8dl.org/privacy-policy.html" class="text-sm text-gray-600 hover:text-gray-800 transition-colors duration-300">
+                        隐私声明
+                    </a>
+                    <a href="https://www.m3u8dl.org/terms-conditions.html" class="text-sm text-gray-600 hover:text-gray-800 transition-colors duration-300">
+                        条款和条件
+                    </a>
+                    <a href="https://www.m3u8dl.org/contact-us.html" class="text-sm text-gray-600 hover:text-gray-800 transition-colors duration-300">
+                        联系我们
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Mobile menu toggle
+        document.getElementById('mobileMenuToggle').addEventListener('click', function() {
+            const mobileMenu = document.getElementById('mobileMenu');
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Language dropdown toggle
+        document.getElementById('languageToggle').addEventListener('click', function() {
+            const dropdown = document.getElementById('languageDropdown');
+            dropdown.classList.toggle('hidden');
+        });
+
+        // Close dropdown when clicking outside
+        document.addEventListener('click', function(event) {
+            const toggle = document.getElementById('languageToggle');
+            const dropdown = document.getElementById('languageDropdown');
+            if (!toggle.contains(event.target) && !dropdown.contains(event.target)) {
+                dropdown.classList.add('hidden');
+            }
+        });
+
+        // Video player functionality
+        const videoPlayer = document.getElementById('videoPlayer');
+        const m3u8UrlInput = document.getElementById('m3u8Url');
+        const loadVideoBtn = document.getElementById('loadVideo');
+        const playPauseBtn = document.getElementById('playPauseBtn');
+        const fullscreenBtn = document.getElementById('fullscreenBtn');
+        const volumeBtn = document.getElementById('volumeBtn');
+        const loadingState = document.getElementById('loadingIndicator');
+        const errorState = document.getElementById('errorState');
+        const errorMessage = document.getElementById('errorMessage');
+
+        let hls = null;
+
+        // Load video function
+        function loadVideo() {
+            const url = m3u8UrlInput.value.trim();
+            if (!url) {
+                alert('请输入有效的M3U8链接');
+                return;
+            }
+
+            // Show loading state
+            loadingState.classList.remove('hidden');
+            errorState.classList.add('hidden');
+
+            // Destroy existing HLS instance
+            if (hls) {
+                hls.destroy();
+            }
+
+            if (Hls.isSupported()) {
+                // Configure HLS with optimized settings to handle buffer issues
+                const hlsConfig = {
+                    debug: false,
+                    enableWorker: true,
+                    lowLatencyMode: false,
+                    backBufferLength: 90,
+                    maxBufferLength: 30,
+                    maxMaxBufferLength: 600,
+                    maxBufferSize: 60 * 1000 * 1000,
+                    maxBufferHole: 0.5,
+                    highBufferWatchdogPeriod: 2,
+                    nudgeOffset: 0.1,
+                    nudgeMaxRetry: 3,
+                    maxFragLookUpTolerance: 0.25,
+                    liveSyncDurationCount: 3,
+                    liveMaxLatencyDurationCount: Infinity,
+                    liveDurationInfinity: false,
+                    liveBackBufferLength: Infinity,
+                    maxLiveSyncPlaybackRate: 1,
+                    liveSyncDuration: undefined,
+                    liveMaxLatencyDuration: undefined,
+                    maxStarvationDelay: 4,
+                    maxLoadingDelay: 4,
+                    minAutoBitrate: 0,
+                    emeEnabled: false,
+                    widevineLicenseUrl: undefined,
+                    drmSystemOptions: {},
+                    requestMediaKeySystemAccessFunc: undefined
+                };
+                
+                hls = new Hls(hlsConfig);
+                hls.loadSource(url);
+                hls.attachMedia(videoPlayer);
+                
+                hls.on(Hls.Events.MANIFEST_PARSED, function() {
+                    loadingState.classList.add('hidden');
+                    enableControls();
+                    // Auto-play video after loading
+                    videoPlayer.play().catch(function(error) {
+                        console.log('Auto-play failed:', error);
+                    });
+                });
+
+                hls.on(Hls.Events.ERROR, function(event, data) {
+                    console.log('HLS Error:', data);
+                    
+                    // Handle recoverable errors
+                    if (data.fatal) {
+                        switch (data.type) {
+                            case Hls.ErrorTypes.NETWORK_ERROR:
+                                console.log('Fatal network error encountered, try to recover');
+                                hls.startLoad();
+                                break;
+                            case Hls.ErrorTypes.MEDIA_ERROR:
+                                console.log('Fatal media error encountered, try to recover');
+                                hls.recoverMediaError();
+                                break;
+                            default:
+                                // Cannot recover
+                                loadingState.classList.add('hidden');
+                                errorState.classList.remove('hidden');
+                                errorMessage.textContent = `错误: ${data.details || '视频加载失败'}`;
+                                disableControls();
+                                break;
+                        }
+                    } else {
+                        // Non-fatal errors - ignore buffer related errors to prevent user confusion
+                        if (data.details && (
+                            data.details.includes('bufferSeekOverHole') ||
+                            data.details.includes('bufferNudgeOnStall') ||
+                            data.details.includes('bufferStallError')
+                        )) {
+                            console.log('Buffer related error (ignored):', data.details);
+                            return;
+                        }
+                        
+                        console.log('Non-fatal error:', data);
+                    }
+                });
+            } else if (videoPlayer.canPlayType('application/vnd.apple.mpegurl')) {
+                // Safari native support
+                videoPlayer.src = url;
+                videoPlayer.addEventListener('loadedmetadata', function() {
+                    loadingState.classList.add('hidden');
+                    enableControls();
+                    // Auto-play video after loading
+                    videoPlayer.play().catch(function(error) {
+                        console.log('Auto-play failed:', error);
+                    });
+                });
+                videoPlayer.addEventListener('error', function() {
+                    loadingState.classList.add('hidden');
+                    errorState.classList.remove('hidden');
+                    errorMessage.textContent = '错误: 视频加载失败';
+                    disableControls();
+                });
+            } else {
+                loadingState.classList.add('hidden');
+                errorState.classList.remove('hidden');
+                errorMessage.textContent = '错误: 此浏览器不支持HLS播放';
+                disableControls();
+            }
+        }
+
+        function enableControls() {
+            playPauseBtn.disabled = false;
+            fullscreenBtn.disabled = false;
+            volumeBtn.disabled = false;
+        }
+
+        function disableControls() {
+            playPauseBtn.disabled = true;
+            fullscreenBtn.disabled = true;
+            volumeBtn.disabled = true;
+        }
+
+        // Event listeners
+        loadVideoBtn.addEventListener('click', loadVideo);
+
+        // Test link button
+        document.getElementById('testLinkBtn').addEventListener('click', function() {
+            m3u8UrlInput.value = 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8';
+            // Focus on the input field after setting the test link
+            m3u8UrlInput.focus();
+        });
+
+        // Play/Pause button
+        playPauseBtn.addEventListener('click', function() {
+            if (videoPlayer.paused) {
+                videoPlayer.play();
+                playPauseBtn.innerHTML = '<i class="fas fa-pause mr-2"></i>暂停';
+            } else {
+                videoPlayer.pause();
+                playPauseBtn.innerHTML = '<i class="fas fa-play mr-2"></i>播放';
+            }
+        });
+
+        // Fullscreen button
+        fullscreenBtn.addEventListener('click', function() {
+            if (videoPlayer.requestFullscreen) {
+                videoPlayer.requestFullscreen();
+            } else if (videoPlayer.webkitRequestFullscreen) {
+                videoPlayer.webkitRequestFullscreen();
+            } else if (videoPlayer.msRequestFullscreen) {
+                videoPlayer.msRequestFullscreen();
+            }
+        });
+
+        // Volume button
+        volumeBtn.addEventListener('click', function() {
+            if (videoPlayer.muted) {
+                videoPlayer.muted = false;
+                volumeBtn.innerHTML = '<i class="fas fa-volume-up mr-2"></i>音量';
+            } else {
+                videoPlayer.muted = true;
+                volumeBtn.innerHTML = '<i class="fas fa-volume-mute mr-2"></i>静音';
+            }
+        });
+
+        // Video events
+        videoPlayer.addEventListener('play', function() {
+            playPauseBtn.innerHTML = '<i class="fas fa-pause mr-2"></i>暂停';
+        });
+
+        videoPlayer.addEventListener('pause', function() {
+            playPauseBtn.innerHTML = '<i class="fas fa-play mr-2"></i>播放';
+        });
+
+        // Enter key support for URL input
+        m3u8UrlInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                loadVideo();
+            }
+        });
+
+        // 页面加载完成后检查URL参数
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const urlParam = urlParams.get('url');
+            if (urlParam) {
+                m3u8UrlInput.value = decodeURIComponent(urlParam);
+                // 自动加载视频
+                setTimeout(function() {
+                    loadVideo();
+                }, 500);
+            }
+        });
+    </script>
+
+    <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-analytics.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+        apiKey: "AIzaSyCGtjnKlH-INBZu-OBa3raT5c02OnKh5cg",
+        authDomain: "iconai-c9c47.firebaseapp.com",
+        projectId: "iconai-c9c47",
+        storageBucket: "iconai-c9c47.firebasestorage.app",
+        messagingSenderId: "550227159978",
+        appId: "1:550227159978:web:31b1534bea0d2282c3d9d3",
+        measurementId: "G-00L6P3TD5P"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    </script>
+</body>
+
+</html>

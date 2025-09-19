@@ -1,0 +1,1201 @@
+<!DOCTYPE html>
+
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>M3U8视频下载器 - 免费在线M3U8转MP4下载工具 | 支持多分辨率</title>
+    <meta name="description" content="免费在线M3U8视频下载工具，支持将M3U8流媒体文件快速转换为MP4格式下载。安全可靠，支持多种分辨率选择，无需安装软件，浏览器直接使用。" />
+    <meta name="keywords" content="M3U8下载,M3U8转MP4,视频下载器,流媒体下载,在线视频下载,M3U8播放器,视频格式转换,免费下载工具" />
+    <link href="https://unpkg.com/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet" />
+    <link href="https://unpkg.com/@fortawesome/fontawesome-free@6.0.0/css/all.min.css" rel="stylesheet" />
+    <!-- M3U8 相关库 -->
+
+    <script defer="" fetchpriority="low" src="https://unpkg.com/hls.js@latest"></script>
+
+    <script defer="" fetchpriority="low" src="https://unpkg.com/m3u8-parser@latest/dist/m3u8-parser.min.js"></script>
+
+    <link rel="icon" type="image/png" href="https://www.m3u8dl.org/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="https://www.m3u8dl.org/favicon.svg" />
+    <link rel="shortcut icon" href="https://www.m3u8dl.org/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="https://www.m3u8dl.org/apple-touch-icon.png" />
+    <link rel="manifest" href="https://www.m3u8dl.org/site.webmanifest" />
+
+
+    <!-- AdSense (kept in <head> as required) -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1086484173623075" crossorigin="anonymous"></script>
+
+    <script src="https://analytics.ahrefs.com/analytics.js" data-key="gqV9g+cYDujAmwBi6s+KNA" async></script>
+
+    <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "tbxvm2mrdv");
+    </script>
+</head>
+
+<body class="overflow-x-hidden bg-gradient-to-br from-green-50 via-white to-emerald-50">
+    <!-- 简洁的导航栏 -->
+    <nav class="bg-white shadow-sm border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo -->
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <img alt="M3U8DL Logo" class="w-8 h-8 mr-3"
+                            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                            src="https://www.m3u8dl.org/assets/img/logo.webp" />
+                        <div class="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center mr-3"
+                            style="display:none;">
+                            <i class="fas fa-play text-white text-sm"></i>
+                        </div>
+                        <a href="https://www.m3u8dl.org/index.html" class="text-xl font-bold text-gray-900 hover:text-green-600 transition-colors">M3U8 Downloader</a>
+                    </div>
+                </div>
+                <!-- Navigation Links -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="https://www.m3u8dl.org/index.html" class="text-green-600 px-3 py-2 text-sm font-medium border-b-2 border-green-600 flex items-center">
+                        <i class="fas fa-home mr-2"></i>首页
+                    </a>
+                    <a href="https://www.m3u8dl.org/m3u8-player.html" class="text-gray-700 hover:text-green-600 px-3 py-2 text-sm font-medium transition-colors flex items-center">
+                        <i class="fas fa-play-circle mr-2"></i>M3U8 播放器
+                    </a>
+                    <a href="https://www.m3u8dl.org/m3u8-parser.html" class="text-gray-700 hover:text-green-600 px-3 py-2 text-sm font-medium transition-colors flex items-center">
+                        <i class="fas fa-search mr-2"></i>M3U8 解析
+                    </a>
+                    <a href="https://www.m3u8dl.org/documentation.html" class="text-gray-700 hover:text-green-600 px-3 py-2 text-sm font-medium transition-colors flex items-center">
+                        <i class="fas fa-book mr-2"></i>文档
+                    </a>
+                    <!-- Language Switcher -->
+                    <div class="relative">
+                        <button id="languageToggle" class="flex items-center text-gray-700 hover:text-green-600 px-3 py-2 text-sm font-medium transition-colors">
+                            <i class="fas fa-globe mr-2"></i>
+                            <span>中文</span>
+                            <i class="fas fa-chevron-down ml-1 text-xs"></i>
+                        </button>
+                        <div id="languageDropdown" class="absolute right-0 mt-2 w-32 bg-white rounded-md shadow-lg py-1 z-50 hidden">
+                            <a href="#" class="block px-4 py-2 text-sm text-green-600 bg-green-50">中文</a>
+                            <a href="https://www.m3u8dl.org/en/index.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">English</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Mobile menu button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobileMenuToggle" class="text-gray-700 hover:text-green-600 focus:outline-none">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="md:hidden bg-white border-t border-gray-200 hidden">
+            <div class="px-4 py-2 space-y-1">
+                <a href="https://www.m3u8dl.org/index.html" class="block px-3 py-2 text-green-600 text-sm font-medium bg-green-50 flex items-center">
+                    <i class="fas fa-home mr-2"></i>首页
+                </a>
+                <a href="https://www.m3u8dl.org/m3u8-player.html" class="block px-3 py-2 text-gray-700 hover:text-green-600 text-sm font-medium flex items-center">
+                    <i class="fas fa-play-circle mr-2"></i>M3U8 播放器
+                </a>
+                <a href="https://www.m3u8dl.org/m3u8-parser.html" class="block px-3 py-2 text-gray-700 hover:text-green-600 text-sm font-medium flex items-center">
+                    <i class="fas fa-search mr-2"></i>M3U8 解析
+                </a>
+                <a href="https://www.m3u8dl.org/documentation.html" class="block px-3 py-2 text-gray-700 hover:text-green-600 text-sm font-medium flex items-center">
+                    <i class="fas fa-book mr-2"></i>文档
+                </a>
+                <hr class="my-2">
+                <a href="https://www.m3u8dl.org/index.html" class="block px-3 py-2 text-green-600 text-sm bg-green-50">中文</a>
+                <a href="https://www.m3u8dl.org/en/index.html" class="block px-3 py-2 text-gray-700 hover:text-green-600 text-sm">English</a>
+            </div>
+        </div>
+    </nav>
+    <!-- 主内容区域 -->
+    <section class="min-h-screen flex items-center justify-center py-20 px-4" id="home">
+        <div class="max-w-4xl mx-auto text-center">
+            <!-- 主标题 -->
+            <h1 class="text-4xl md:text-6xl font-bold text-gray-900 mb-6 flex items-center justify-center">
+                <i class="fas fa-film text-green-600 mr-4 text-3xl md:text-5xl"></i>
+                M3U8 视频下载器
+            </h1>
+            <!-- 描述文字 -->
+            <p class="text-lg md:text-xl text-gray-600 mb-12 max-w-3xl mx-auto leading-relaxed">
+                M3U8 转换视频文件下载。输入 M3U8 链接，选择分辨率，然后点击下载即可。
+            </p>
+            <!-- 优点展示 -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 mb-12 max-w-4xl mx-auto">
+                <div class="inline-flex items-center justify-center bg-green-50 rounded-full px-4 py-2">
+                    <i class="fas fa-shield-alt text-green-600 text-base mr-2"></i>
+                    <span class="text-sm font-medium text-gray-600">信息安全</span>
+                </div>
+                <div class="inline-flex items-center justify-center bg-green-50 rounded-full px-4 py-2">
+                    <i class="fas fa-magic text-green-600 text-base mr-2"></i>
+                    <span class="text-sm font-medium text-gray-600">简单便捷</span>
+                </div>
+                <div class="inline-flex items-center justify-center bg-green-50 rounded-full px-4 py-2">
+                    <i class="fas fa-cog text-green-600 text-base mr-2"></i>
+                    <span class="text-sm font-medium text-gray-600">支持多种分辨率</span>
+                </div>
+                <div class="inline-flex items-center justify-center bg-green-50 rounded-full px-4 py-2">
+                    <i class="fas fa-cloud text-green-600 text-base mr-2"></i>
+                    <span class="text-sm font-medium text-gray-600">无云端存储</span>
+                </div>
+            </div>
+            <!-- 大型拖拽/输入区域 -->
+            <div class="bg-white rounded-2xl shadow-lg border-2 border-dashed border-gray-300 hover:border-blue-400 transition-colors duration-300 p-12 md:p-16 cursor-pointer group"
+                id="drop-zone">
+                <div class="flex flex-col items-center justify-center">
+                    <!-- 输入框 -->
+                    <div class="w-full max-w-2xl">
+                        <input
+                            class="w-full p-5 text-lg border-2 border-gray-300 rounded-2xl focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100 text-center shadow-sm hover:shadow-md transition-all duration-300 bg-white"
+                            id="url-input" placeholder="输入 M3U8 视频链接地址..." type="url" />
+                    </div>
+                    <!-- 清晰度选择面板 -->
+                    <div class="hidden mt-4 w-full max-w-2xl mx-auto" id="quality-panel">
+                        <div
+                            class="bg-green-50 border border-green-100 rounded-xl px-4 py-3 flex items-center justify-between">
+                            <label class="text-gray-600 text-sm" for="quality-select">选择分辨率：</label>
+                            <select
+                                class="text-sm border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-200 focus:border-blue-500"
+                                id="quality-select"></select>
+                        </div>
+                    </div>
+                    <!-- 清晰度错误提示（局部） -->
+                    <div class="hidden mt-3 w-full max-w-2xl mx-auto bg-red-50 border border-red-200 text-red-700 rounded-xl px-4 py-3"
+                        id="quality-error"></div>
+                    <!-- 提示文字 -->
+                    <p class="text-sm text-gray-500 mt-4">
+                        支持以 .m3u8 结尾的链接地址，示例:
+                        <button class="text-green-600 hover:underline ml-2" id="fill-demo-cn" type="button">测试 M3U8
+                            URL</button>
+                    </p>
+                    
+                    <!-- 测试功能按钮 - 弱化处理 -->
+                    <div class="flex flex-wrap justify-center gap-2 mt-4">
+                        <button
+                            class="bg-gray-50 hover:bg-gray-100 text-gray-600 border border-gray-200 px-4 py-1.5 rounded-md font-normal transition-all duration-200 flex items-center text-xs opacity-75 hover:opacity-100"
+                            id="test-play-btn"
+                            title="在新窗口中测试播放此链接">
+                            <i class="fas fa-play text-xs mr-1.5"></i>
+                            测试播放
+                        </button>
+                        <button
+                            class="bg-gray-50 hover:bg-gray-100 text-gray-600 border border-gray-200 px-4 py-1.5 rounded-md font-normal transition-all duration-200 flex items-center text-xs opacity-75 hover:opacity-100"
+                            id="test-parse-btn"
+                            title="在新窗口中解析此链接详情">
+                            <i class="fas fa-search text-xs mr-1.5"></i>
+                            解析地址
+                        </button>
+                    </div>
+                    
+                    <!-- 操作按钮 -->
+
+                    <div class="hidden w-full mx-auto mt-6" id="progress-wrap">
+                        <div class="flex items-center justify-between mb-1">
+                            <span class="text-sm text-gray-700" id="progress-text">准备中…</span>
+                            <span class="text-sm text-gray-600" id="progress-percent">0%</span>
+                        </div>
+                        <div class="w-full rounded-full h-3 bg-green-50 shadow-inner"
+                            style="--tw-shadow-color: rgba(16,185,129,.25)">
+                            <div class="h-3 rounded-full" id="progress-bar"
+                                style="width:0%;background-image:linear-gradient(90deg,#10b981,#16a34a);box-shadow:0 0 0 1px rgba(16,185,129,.35) inset,0 0 12px rgba(16,185,129,.25);position:relative;overflow:hidden">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="flex flex-wrap justify-center gap-4 mt-10">
+                        <button
+                            class="bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white px-10 py-4 rounded-xl font-semibold transition-all duration-300 flex items-center shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+                            id="download-btn">
+                            <i class="fas fa-download mr-3 text-lg"></i>
+                            立即下载
+                        </button>
+                        <button
+                            class="bg-white hover:bg-gray-50 text-gray-700 border-2 border-gray-200 hover:border-gray-300 px-8 py-4 rounded-xl font-medium transition-all duration-300 flex items-center shadow-md hover:shadow-lg"
+                            id="clear-btn">
+                            <i class="fas fa-eraser mr-2"></i>
+                            清空输入
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- 下载状态提示 -->
+    <div class="hidden fixed top-20 left-1/2 transform -translate-x-1/2 z-50 bg-white rounded-lg shadow-lg p-6 border"
+        id="download-status">
+        <div class="flex items-center justify-center">
+            <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mr-4"></div>
+            <div class="flex flex-col">
+                <span class="text-lg" id="downloading-text">正在下载中...</span>
+                <span class="text-sm text-gray-600 mt-1" id="resolution-info"></span>
+            </div>
+        </div>
+    </div>
+    <!-- 错误提示 -->
+    <div class="hidden fixed top-20 left-1/2 transform -translate-x-1/2 z-50 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg"
+        id="error-message"></div>
+    <!-- 播放器区域 -->
+    <div class="hidden fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center p-4"
+        id="video-player">
+        <div class="bg-white rounded-lg p-6 max-w-4xl w-full">
+            <div class="flex justify-between items-center mb-4">
+                <h3 class="text-xl font-bold text-gray-900">M3U8 视频播放</h3>
+                <button class="text-gray-500 hover:text-gray-700" id="close-player">
+                    <i class="fas fa-times text-xl"></i>
+                </button>
+            </div>
+            <div class="relative bg-black rounded-lg overflow-hidden">
+                <div class="w-full h-96" id="m3u8-player"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 使用流程说明模块 -->
+    <section class="bg-gradient-to-r from-white to-blue-50 py-12" id="usage-flow">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- 标题 -->
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                    <i class="fas fa-list-ol text-green-600 mr-3"></i>
+                    使用流程
+                </h2>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto">
+                    简单三步，轻松下载M3U8视频
+                </p>
+            </div>
+
+            <!-- 流程步骤 -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+                <!-- 步骤1：输入链接 -->
+                <div class="text-center">
+                    <div class="bg-green-50 rounded-xl p-6">
+                        <div class="flex items-center justify-center mb-4">
+                            <div class="bg-green-600 text-white rounded-full w-10 h-10 flex items-center justify-center font-bold text-lg">
+                                1
+                            </div>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">输入链接</h3>
+                        <p class="text-gray-600">
+                            在输入框中粘贴您的M3U8视频链接，支持各种格式的流媒体链接
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 步骤2：选择分辨率 -->
+                <div class="text-center">
+                    <div class="bg-green-50 rounded-xl p-6">
+                        <div class="flex items-center justify-center mb-4">
+                            <div class="bg-green-600 text-white rounded-full w-10 h-10 flex items-center justify-center font-bold text-lg">
+                                2
+                            </div>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">选择分辨率</h3>
+                        <p class="text-gray-600">
+                            从下拉菜单中选择您需要的视频分辨率，推荐选择1080p获得最佳画质
+                        </p>
+                    </div>
+                </div>
+
+                <!-- 步骤3：点击下载 -->
+                <div class="text-center">
+                    <div class="bg-green-50 rounded-xl p-6">
+                        <div class="flex items-center justify-center mb-4">
+                            <div class="bg-green-600 text-white rounded-full w-10 h-10 flex items-center justify-center font-bold text-lg">
+                                3
+                            </div>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-3">点击下载</h3>
+                        <p class="text-gray-600">
+                            点击"立即下载"按钮开始下载，系统会自动处理并合并视频片段
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 提示信息 -->
+            <div class="mt-12 bg-blue-50 border border-blue-200 rounded-xl p-6">
+                <div class="flex items-start">
+                    <i class="fas fa-info-circle text-blue-500 text-xl mr-3 mt-1"></i>
+                    <div>
+                        <h4 class="text-lg font-semibold text-blue-900 mb-2">温馨提示</h4>
+                        <ul class="text-blue-800 space-y-1">
+                            <li>• 请确保M3U8链接有效且可访问</li>
+                            <li>• 下载时间取决于视频大小和网络速度</li>
+                            <li>• 如遇到问题，请参考下方的故障排除指南</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- 故障排除模块 -->
+    <section class="bg-gradient-to-l from-gray-50 to-blue-50 py-8" id="troubleshooting">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <!-- 标题 -->
+            <div class="text-center mb-12">
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
+                    <i class="fas fa-tools text-green-600 mr-3"></i>
+                    下载故障排除
+                </h2>
+                <p class="text-lg text-gray-600 max-w-3xl mx-auto">
+                    遇到下载失败？这里提供常见问题的解决方案，帮助您成功下载视频
+                </p>
+            </div>
+
+            <!-- 故障排除内容 -->
+            <div class="space-y-8">
+                <!-- 问题1：网络连接问题 -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                    <div class="grid grid-cols-1 lg:grid-cols-2">
+                        <!-- 问题描述 -->
+                        <div class="bg-red-50 p-6 border-r border-red-100">
+                            <div class="flex items-center mb-4">
+                                <i class="fas fa-wifi text-red-500 text-2xl mr-3"></i>
+                                <h3 class="text-xl font-bold text-red-800">网络连接问题</h3>
+                            </div>
+                            <div class="space-y-3">
+                                <div class="flex items-start">
+                                    <i class="fas fa-exclamation-circle text-red-400 mt-1 mr-2"></i>
+                                    <p class="text-red-700">网络不稳定、连接超时</p>
+                                </div>
+                                <div class="flex items-start">
+                                    <i class="fas fa-exclamation-circle text-red-400 mt-1 mr-2"></i>
+                                    <p class="text-red-700">服务器无响应或连接中断</p>
+                                </div>
+                                <div class="flex items-start">
+                                    <i class="fas fa-exclamation-circle text-red-400 mt-1 mr-2"></i>
+                                    <p class="text-red-700">网络速度过慢导致下载失败</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 解决方案 -->
+                        <div class="bg-green-50 p-6">
+                            <div class="flex items-center mb-4">
+                                <i class="fas fa-check-circle text-green-500 text-2xl mr-3"></i>
+                                <h3 class="text-xl font-bold text-green-800">解决方案</h3>
+                            </div>
+                            <div class="space-y-3">
+                                <div class="flex items-start">
+                                    <i class="fas fa-arrow-right text-green-400 mt-1 mr-2"></i>
+                                    <p class="text-green-700">确保网络连接稳定，检查WiFi信号</p>
+                                </div>
+                                <div class="flex items-start">
+                                    <i class="fas fa-arrow-right text-green-400 mt-1 mr-2"></i>
+                                    <p class="text-green-700">尝试刷新页面重新下载</p>
+                                </div>
+                                <div class="flex items-start">
+                                    <i class="fas fa-arrow-right text-green-400 mt-1 mr-2"></i>
+                                    <p class="text-green-700">更换网络环境（如切换到移动数据）</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 问题2：CORS跨域限制 -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                    <div class="grid grid-cols-1 lg:grid-cols-2">
+                        <!-- 问题描述 -->
+                        <div class="bg-orange-50 p-6 border-r border-orange-100">
+                            <div class="flex items-center mb-4">
+                                <i class="fas fa-shield-alt text-orange-500 text-2xl mr-3"></i>
+                                <h3 class="text-xl font-bold text-orange-800">CORS跨域限制</h3>
+                            </div>
+                            <div class="space-y-3">
+                                <div class="flex items-start">
+                                    <i class="fas fa-exclamation-circle text-orange-400 mt-1 mr-2"></i>
+                                    <p class="text-orange-700">服务器不允许跨域访问</p>
+                                </div>
+                                <div class="flex items-start">
+                                    <i class="fas fa-exclamation-circle text-orange-400 mt-1 mr-2"></i>
+                                    <p class="text-orange-700">浏览器阻止跨域请求</p>
+                                </div>
+                                <div class="flex items-start">
+                                    <i class="fas fa-exclamation-circle text-orange-400 mt-1 mr-2"></i>
+                                    <p class="text-orange-700">控制台显示CORS错误信息</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 解决方案 -->
+                        <div class="bg-green-50 p-6">
+                            <div class="flex items-center mb-4">
+                                <i class="fas fa-check-circle text-green-500 text-2xl mr-3"></i>
+                                <h3 class="text-xl font-bold text-green-800">解决方案</h3>
+                            </div>
+                            <div class="space-y-3">
+                                <div class="flex items-start">
+                                    <i class="fas fa-arrow-right text-green-400 mt-1 mr-2"></i>
+                                    <p class="text-green-700">使用支持CORS的M3U8链接</p>
+                                </div>
+                                <div class="flex items-start">
+                                    <i class="fas fa-arrow-right text-green-400 mt-1 mr-2"></i>
+                                    <p class="text-green-700">尝试使用代理服务器</p>
+                                </div>
+                                <div class="flex items-start">
+                                    <i class="fas fa-arrow-right text-green-400 mt-1 mr-2"></i>
+                                    <p class="text-green-700">联系视频提供方开启跨域支持</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 问题3：链接格式错误 -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                    <div class="grid grid-cols-1 lg:grid-cols-2">
+                        <!-- 问题描述 -->
+                        <div class="bg-yellow-50 p-6 border-r border-yellow-100">
+                            <div class="flex items-center mb-4">
+                                <i class="fas fa-link text-yellow-500 text-2xl mr-3"></i>
+                                <h3 class="text-xl font-bold text-yellow-800">链接格式错误</h3>
+                            </div>
+                            <div class="space-y-3">
+                                <div class="flex items-start">
+                                    <i class="fas fa-exclamation-circle text-yellow-400 mt-1 mr-2"></i>
+                                    <p class="text-yellow-700">URL格式不正确</p>
+                                </div>
+                                <div class="flex items-start">
+                                    <i class="fas fa-exclamation-circle text-yellow-400 mt-1 mr-2"></i>
+                                    <p class="text-yellow-700">不是有效的M3U8链接</p>
+                                </div>
+                                <div class="flex items-start">
+                                    <i class="fas fa-exclamation-circle text-yellow-400 mt-1 mr-2"></i>
+                                    <p class="text-yellow-700">链接包含特殊字符或编码问题</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 解决方案 -->
+                        <div class="bg-green-50 p-6">
+                            <div class="flex items-center mb-4">
+                                <i class="fas fa-check-circle text-green-500 text-2xl mr-3"></i>
+                                <h3 class="text-xl font-bold text-green-800">解决方案</h3>
+                            </div>
+                            <div class="space-y-3">
+                                <div class="flex items-start">
+                                    <i class="fas fa-arrow-right text-green-400 mt-1 mr-2"></i>
+                                    <p class="text-green-700">确认链接以.m3u8结尾</p>
+                                </div>
+                                <div class="flex items-start">
+                                    <i class="fas fa-arrow-right text-green-400 mt-1 mr-2"></i>
+                                    <p class="text-green-700">在浏览器中直接访问链接测试</p>
+                                </div>
+                                <div class="flex items-start">
+                                    <i class="fas fa-arrow-right text-green-400 mt-1 mr-2"></i>
+                                    <p class="text-green-700">检查链接是否完整，无缺失字符</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 问题4：视频已过期 -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                    <div class="grid grid-cols-1 lg:grid-cols-2">
+                        <!-- 问题描述 -->
+                        <div class="bg-purple-50 p-6 border-r border-purple-100">
+                            <div class="flex items-center mb-4">
+                                <i class="fas fa-clock text-purple-500 text-2xl mr-3"></i>
+                                <h3 class="text-xl font-bold text-purple-800">视频已过期</h3>
+                            </div>
+                            <div class="space-y-3">
+                                <div class="flex items-start">
+                                    <i class="fas fa-exclamation-circle text-purple-400 mt-1 mr-2"></i>
+                                    <p class="text-purple-700">M3U8链接已失效</p>
+                                </div>
+                                <div class="flex items-start">
+                                    <i class="fas fa-exclamation-circle text-purple-400 mt-1 mr-2"></i>
+                                    <p class="text-purple-700">视频文件不存在或已删除</p>
+                                </div>
+                                <div class="flex items-start">
+                                    <i class="fas fa-exclamation-circle text-purple-400 mt-1 mr-2"></i>
+                                    <p class="text-purple-700">服务器返回404错误</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 解决方案 -->
+                        <div class="bg-green-50 p-6">
+                            <div class="flex items-center mb-4">
+                                <i class="fas fa-check-circle text-green-500 text-2xl mr-3"></i>
+                                <h3 class="text-xl font-bold text-green-800">解决方案</h3>
+                            </div>
+                            <div class="space-y-3">
+                                <div class="flex items-start">
+                                    <i class="fas fa-arrow-right text-green-400 mt-1 mr-2"></i>
+                                    <p class="text-green-700">获取最新的M3U8链接</p>
+                                </div>
+                                <div class="flex items-start">
+                                    <i class="fas fa-arrow-right text-green-400 mt-1 mr-2"></i>
+                                    <p class="text-green-700">尽快下载，避免链接过期</p>
+                                </div>
+                                <div class="flex items-start">
+                                    <i class="fas fa-arrow-right text-green-400 mt-1 mr-2"></i>
+                                    <p class="text-green-700">联系内容提供方获取新链接</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 问题5：加密视频 -->
+                <div class="bg-white rounded-xl shadow-lg overflow-hidden">
+                    <div class="grid grid-cols-1 lg:grid-cols-2">
+                        <!-- 问题描述 -->
+                        <div class="bg-blue-50 p-6 border-r border-blue-100">
+                            <div class="flex items-center mb-4">
+                                <i class="fas fa-lock text-blue-500 text-2xl mr-3"></i>
+                                <h3 class="text-xl font-bold text-blue-800">加密视频</h3>
+                            </div>
+                            <div class="space-y-3">
+                                <div class="flex items-start">
+                                    <i class="fas fa-exclamation-circle text-blue-400 mt-1 mr-2"></i>
+                                    <p class="text-blue-700">视频使用DRM加密保护</p>
+                                </div>
+                                <div class="flex items-start">
+                                    <i class="fas fa-exclamation-circle text-blue-400 mt-1 mr-2"></i>
+                                    <p class="text-blue-700">需要特殊密钥才能解密</p>
+                                </div>
+                                <div class="flex items-start">
+                                    <i class="fas fa-exclamation-circle text-blue-400 mt-1 mr-2"></i>
+                                    <p class="text-blue-700">无法直接下载播放</p>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- 解决方案 -->
+                        <div class="bg-green-50 p-6">
+                            <div class="flex items-center mb-4">
+                                <i class="fas fa-check-circle text-green-500 text-2xl mr-3"></i>
+                                <h3 class="text-xl font-bold text-green-800">解决方案</h3>
+                            </div>
+                            <div class="space-y-3">
+                                <div class="flex items-start">
+                                    <i class="fas fa-arrow-right text-green-400 mt-1 mr-2"></i>
+                                    <p class="text-green-700">寻找未加密的视频源</p>
+                                </div>
+                                <div class="flex items-start">
+                                    <i class="fas fa-arrow-right text-green-400 mt-1 mr-2"></i>
+                                    <p class="text-green-700">使用专业的DRM解密工具</p>
+                                </div>
+                                <div class="flex items-start">
+                                    <i class="fas fa-arrow-right text-green-400 mt-1 mr-2"></i>
+                                    <p class="text-green-700">联系版权方获取授权访问</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script>
+        // 语言切换下拉菜单功能
+        document.addEventListener('DOMContentLoaded', function () {
+            // 移动端菜单按钮功能
+            const mobileMenuButton = document.getElementById('mobileMenuToggle');
+            const mobileMenu = document.getElementById('mobileMenu');
+
+            if (mobileMenuButton && mobileMenu) {
+                mobileMenuButton.addEventListener('click', function () {
+                    // 切换移动端菜单的显示/隐藏状态
+                    mobileMenu.classList.toggle('hidden');
+                });
+            }
+
+            // 语言切换下拉菜单功能
+            const languageButton = document.getElementById('languageToggle');
+            const languageMenu = document.getElementById('languageDropdown');
+
+            if (languageButton && languageMenu) {
+                // 点击按钮显示/隐藏下拉菜单
+                languageButton.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    languageMenu.classList.toggle('hidden');
+                });
+
+                // 点击页面其他地方关闭下拉菜单
+                document.addEventListener('click', function () {
+                    if (!languageMenu.classList.contains('hidden')) {
+                        languageMenu.classList.add('hidden');
+                    }
+                });
+
+                // 阻止点击下拉菜单本身导致关闭
+                languageMenu.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                });
+            }
+
+            // M3U8 下载功能
+
+            const urlInput = document.getElementById('url-input');
+            const downloadBtn = document.getElementById('download-btn');
+            const clearBtn = document.getElementById('clear-btn');
+            const dropZone = document.getElementById('drop-zone');
+            const downloadStatus = document.getElementById('download-status');
+            const errorMessage = document.getElementById('error-message');
+            const videoPlayer = document.getElementById('video-player');
+            const closePlayer = document.getElementById('close-player');
+            const qualityPanel = document.getElementById('quality-panel');
+            const qualitySelect = document.getElementById('quality-select');
+            const qualityError = document.getElementById('quality-error');
+
+            // 工具: 防抖
+            function debounce(fn, wait) {
+                let t;
+                return (...args) => { clearTimeout(t); t = setTimeout(() => fn(...args), wait); };
+            }
+
+            // 解析 M3U8 主播放列表中的分辨率
+            async function fetchQualitiesIfM3U8(url) {
+                try {
+                    const isMaybeUrl = /^https?:\/\//i.test(url) && /\.m3u8(?:\?|#|$)/i.test(url);
+                    if (!url) { qualityPanel.classList.add('hidden'); return; }
+                    if (!isMaybeUrl) { qualityPanel.classList.add('hidden'); showLocalQualityError('视频地址无法解析，请检查输入'); return; }
+                    const r = await fetch(url, { method: 'GET' });
+                    if (!r.ok) throw new Error('HTTP ' + r.status);
+                    const text = await r.text();
+                    // 如果是主索引，尝试提取各清晰度子列表
+                    const lines = text.split('\n').map(l => l.trim());
+                    const variants = [];
+                    for (let i = 0; i < lines.length; i++) {
+                        const l = lines[i];
+                        if (l.startsWith('#EXT-X-STREAM-INF')) {
+                            const info = l;
+                            let next = '';
+                            // 下一行通常是子 m3u8 路径
+                            for (let j = i + 1; j < lines.length; j++) { if (lines[j] && !lines[j].startsWith('#')) { next = lines[j]; break; } }
+                            // 解析分辨率
+                            let res = '';
+                            const match = info.match(/RESOLUTION=([0-9]+x[0-9]+)/i);
+                            if (match) res = match[1];
+                            else {
+                                const bw = info.match(/BANDWIDTH=(\d+)/i);
+                                if (bw) res = Math.round(parseInt(bw[1], 10) / 1000) + ' kbps';
+                                else res = 'Unknown';
+                            }
+                            // 绝对化URL
+                            let childUrl = next;
+                            if (childUrl && !/^https?:\/\//i.test(childUrl)) {
+                                const u = new URL(url);
+                                const base = u.href.substring(0, u.href.lastIndexOf('/') + 1);
+                                if (childUrl.startsWith('/')) childUrl = u.origin + childUrl; else childUrl = base + childUrl;
+                            }
+                            if (childUrl) variants.push({ label: res, url: childUrl });
+                        }
+                    }
+                    if (variants.length === 0) { qualityPanel.classList.add('hidden'); showLocalQualityError('视频地址无法解析，请检查输入'); return; }
+                    // 填充下拉
+                    qualitySelect.innerHTML = '';
+                    variants.forEach((v, idx) => {
+                        const opt = document.createElement('option');
+                        opt.value = v.url; opt.textContent = v.label || ('Option ' + (idx + 1));
+                        qualitySelect.appendChild(opt);
+                    });
+                    hideLocalQualityError();
+                    qualityPanel.classList.remove('hidden');
+                } catch (e) {
+                    qualityPanel.classList.add('hidden');
+                    showLocalQualityError('视频地址无法解析，请检查输入');
+                }
+            }
+
+            function showLocalQualityError(msg) { if (!qualityError) return; qualityError.textContent = msg; qualityError.classList.remove('hidden'); }
+            function hideLocalQualityError() { if (!qualityError) return; qualityError.classList.add('hidden'); }
+
+            // 输入检测（防抖 600ms）
+            urlInput.addEventListener('input', debounce(() => fetchQualitiesIfM3U8(urlInput.value.trim()), 600));
+            // 固定显示按钮，不再根据状态隐藏
+
+            // 示例按钮（中文）
+            const demoCn = document.getElementById('fill-demo-cn');
+            if (demoCn) {
+                demoCn.addEventListener('click', () => {
+                    const demo = 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8';
+                    urlInput.value = demo;
+                    // 显示清空按钮
+                    clearBtn.classList.remove('hidden');
+                    fetchQualitiesIfM3U8(demo);
+                });
+            }
+
+            // 拖拽功能
+            dropZone.addEventListener('dragover', function (e) {
+                e.preventDefault();
+                dropZone.classList.add('border-blue-400', 'bg-blue-50');
+            });
+
+            dropZone.addEventListener('dragleave', function (e) {
+                e.preventDefault();
+                dropZone.classList.remove('border-blue-400', 'bg-blue-50');
+            });
+
+            dropZone.addEventListener('drop', function (e) {
+                e.preventDefault();
+                dropZone.classList.remove('border-blue-400', 'bg-blue-50');
+
+                const files = e.dataTransfer.files;
+                if (files.length > 0) {
+                    const file = files[0];
+                    if (file.name.endsWith('.m3u8')) {
+                        const reader = new FileReader();
+                        reader.onload = function (e) {
+                            urlInput.value = e.target.result;
+                        };
+                        reader.readAsText(file);
+                    } else {
+                        showError('请选择 .m3u8 文件');
+                    }
+                }
+            });
+
+            // 下载按钮
+            downloadBtn.addEventListener('click', function () {
+                const url = urlInput.value.trim();
+                if (!url) {
+                    showError('请输入M3U8链接地址');
+                    return;
+                }
+                if (!url.toLowerCase().endsWith('.m3u8')) {
+                    showError('请输入以 .m3u8 结尾的链接地址');
+                    return;
+                }
+
+                // 检查是否正在下载，如果是则直接返回
+                if (isDownloading) {
+                    return;
+                }
+
+                // 开始下载
+                window.downloadCancelled = false;
+                isDownloading = true;
+
+                // 禁用按钮并更改样式
+                const downloadBtn = document.getElementById('download-btn');
+                downloadBtn.disabled = true;
+                downloadBtn.innerHTML = '<i class="fas fa-spinner fa-spin mr-2"></i>下载中...';
+                downloadBtn.classList.remove('bg-green-600', 'hover:bg-green-700');
+                downloadBtn.classList.add('bg-gray-400', 'cursor-not-allowed');
+
+                // 调用真正的M3U8下载函数
+                window.currentDownloadPromise = window.startDownloadM3U8(url).then(() => {
+                    // 下载成功完成
+                    isDownloading = false;
+                    const downloadBtn = document.getElementById('download-btn');
+                    downloadBtn.disabled = false;
+                    downloadBtn.innerHTML = '<i class="fas fa-download mr-2"></i>立即下载';
+                    downloadBtn.classList.remove('bg-gray-400', 'cursor-not-allowed');
+                    downloadBtn.classList.add('bg-green-600', 'hover:bg-green-700');
+                    showSuccess('下载完成！');
+                }).catch((error) => {
+                    // 下载失败
+                    isDownloading = false;
+                    const downloadBtn = document.getElementById('download-btn');
+                    downloadBtn.disabled = false;
+                    downloadBtn.innerHTML = '<i class="fas fa-download mr-2"></i>立即下载';
+                    downloadBtn.classList.remove('bg-gray-400', 'cursor-not-allowed');
+                    downloadBtn.classList.add('bg-green-600', 'hover:bg-green-700');
+
+                    // 显示错误信息
+                    showError('下载失败: ' + error.message);
+                });
+            });
+
+
+
+            // 清空按钮
+            clearBtn.addEventListener('click', () => {
+                urlInput.value = '';
+                try { urlInput.setSelectionRange(0, 0); } catch (e) { }
+                urlInput.dispatchEvent(new Event('input', { bubbles: true }));
+                hideLocalQualityError();
+                qualityPanel.classList.add('hidden');
+                urlInput.focus();
+            });
+
+            // 测试播放按钮
+            document.getElementById('test-play-btn').addEventListener('click', function() {
+                const url = urlInput.value.trim();
+                if (!url) {
+                    showError('请先输入M3U8链接地址');
+                    return;
+                }
+                if (!url.toLowerCase().endsWith('.m3u8')) {
+                    showError('请输入以 .m3u8 结尾的链接地址');
+                    return;
+                }
+                // 跳转到播放器页面并传递URL参数
+                window.open('m3u8-player.html?url=' + encodeURIComponent(url), '_blank');
+            });
+
+            // 解析地址按钮
+            document.getElementById('test-parse-btn').addEventListener('click', function() {
+                const url = urlInput.value.trim();
+                if (!url) {
+                    showError('请先输入M3U8链接地址');
+                    return;
+                }
+                if (!url.toLowerCase().endsWith('.m3u8')) {
+                    showError('请输入以 .m3u8 结尾的链接地址');
+                    return;
+                }
+                // 跳转到解析器页面并传递URL参数
+                window.open('m3u8-parser.html?url=' + encodeURIComponent(url), '_blank');
+            });
+
+            // 显示错误信息
+            function showError(message) {
+                errorMessage.textContent = message;
+                errorMessage.classList.remove('hidden');
+                setTimeout(() => {
+                    errorMessage.classList.add('hidden');
+                }, 5000);
+            }
+
+            // 显示成功信息
+            function showSuccess(message) {
+                errorMessage.textContent = message;
+                errorMessage.classList.remove('hidden');
+                errorMessage.className = 'fixed top-20 left-1/2 transform -translate-x-1/2 z-50 bg-green-100 border border-green-400 text-green-700 px-4 py-3 rounded-lg';
+                setTimeout(() => {
+                    errorMessage.classList.add('hidden');
+                    errorMessage.className = 'hidden fixed top-20 left-1/2 transform -translate-x-1/2 z-50 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg';
+                }, 3000);
+            }
+
+            // 下载状态变量
+            let isDownloading = false;
+
+            // 开始下载
+            window.startDownload = function (url) {
+                if (isDownloading) {
+                    // 如果正在下载，则停止下载
+                    window.downloadCancelled = true;
+                    isDownloading = false;
+                    const downloadBtn = document.getElementById('download-btn');
+                    downloadBtn.innerHTML = '<i class="fas fa-download mr-2"></i>立即下载';
+                    downloadBtn.classList.remove('bg-red-600', 'hover:bg-red-700');
+                    downloadBtn.classList.add('bg-green-600', 'hover:bg-green-700');
+                    return;
+                }
+
+                // 重置取消状态
+                window.downloadCancelled = false;
+
+                // 更改下载状态
+                isDownloading = true;
+
+                // 更改按钮文本和图标
+                const downloadBtn = document.getElementById('download-btn');
+                downloadBtn.innerHTML = '<i class="fas fa-stop mr-2"></i>停止下载';
+                downloadBtn.classList.remove('bg-green-600', 'hover:bg-green-700');
+                downloadBtn.classList.add('bg-red-600', 'hover:bg-red-700');
+
+                // 调用实际的M3U8下载功能
+                window.currentDownloadPromise = window.startDownloadM3U8(url).then(() => {
+                    // 下载成功完成
+                    isDownloading = false;
+                    const downloadBtn = document.getElementById('download-btn');
+                    downloadBtn.innerHTML = '<i class="fas fa-download mr-2"></i>立即下载';
+                    downloadBtn.classList.remove('bg-red-600', 'hover:bg-red-700');
+                    downloadBtn.classList.add('bg-green-600', 'hover:bg-green-700');
+                    showSuccess('下载完成！');
+                }).catch((error) => {
+                    // 下载失败
+                    isDownloading = false;
+                    const downloadBtn = document.getElementById('download-btn');
+                    downloadBtn.innerHTML = '<i class="fas fa-download mr-2"></i>立即下载';
+                    downloadBtn.classList.remove('bg-red-600', 'hover:bg-red-700');
+                    downloadBtn.classList.add('bg-green-600', 'hover:bg-green-700');
+
+                    // 只有在不是取消的情况下才显示错误
+                    if (error.message !== '下载已取消') {
+                        showError(error.message || '下载失败');
+                    }
+                });
+            }
+
+            // 停止下载
+            window.stopDownload = function (completed = false) {
+                // 设置取消标志
+                window.downloadCancelled = true;
+
+                // 更改下载状态
+                isDownloading = false;
+
+                // 更改按钮文本和图标
+                const downloadBtn = document.getElementById('download-btn');
+                downloadBtn.innerHTML = '<i class="fas fa-download mr-2"></i>立即下载';
+                downloadBtn.classList.remove('bg-red-600', 'hover:bg-red-700');
+                downloadBtn.classList.add('bg-green-600', 'hover:bg-green-700');
+
+                // 隐藏下载状态
+                downloadStatus.classList.add('hidden');
+
+                // 重置进度条
+                const progressBar = document.getElementById('progress-bar');
+                const progressPercent = document.getElementById('progress-percent');
+                if (progressBar) progressBar.style.width = '0%';
+                if (progressPercent) progressPercent.textContent = '0%';
+
+                // 隐藏进度条区域
+                const progressWrap = document.getElementById('progress-wrap');
+                if (progressWrap) progressWrap.classList.add('hidden');
+
+                // 清除定时器
+                if (window.downloadTimer) {
+                    clearTimeout(window.downloadTimer);
+                    window.downloadTimer = null;
+                }
+
+                // 如果不是完成下载，显示已取消消息
+                if (!completed) {
+                    showError('下载已取消');
+                }
+            }
+
+            // 播放视频
+            function playVideo(url) {
+                videoPlayer.classList.remove('hidden');
+                const playerContainer = document.getElementById('m3u8-player');
+                playerContainer.innerHTML = '';
+
+                try {
+                    if (typeof DPlayer !== 'undefined') {
+                        const dp = new DPlayer({
+                            container: playerContainer,
+                            video: { url, type: 'hls' },
+                            autoplay: false,
+                            theme: '#1a73e8',
+                            lang: 'zh-cn',
+                            hotkey: true,
+                            preload: 'auto'
+                        });
+                        dp.on('error', () => showError('视频加载失败，请检查链接是否有效'));
+                    } else if (typeof Hls !== 'undefined' && Hls.isSupported()) {
+                        const video = document.createElement('video');
+                        video.controls = true;
+                        video.style.width = '100%';
+                        video.style.height = '100%';
+                        playerContainer.appendChild(video);
+                        const hls = new Hls();
+                        hls.loadSource(url);
+                        hls.attachMedia(video);
+                        hls.on(Hls.Events.ERROR, () => showError('视频加载失败，请检查链接是否有效'));
+                    } else {
+                        showError('您的浏览器不支持M3U8播放，请使用现代浏览器');
+                    }
+                } catch (err) {
+                    showError('播放器初始化失败，请刷新页面重试');
+                }
+            }
+        });
+    </script>
+    <script defer="True" src="https://cdn.jsdelivr.net/npm/mux.js@6.3.0/dist/mux.min.js"></script>
+    <script>
+        (function () {
+            // 全局变量控制下载状态
+            window.downloadCancelled = false;
+
+            function $(id) { return document.getElementById(id); }
+            function showProgressUI(show) { var wrap = $("progress-wrap"); if (!wrap) return; if (show) wrap.classList.remove("hidden"); else wrap.classList.add("hidden"); }
+            function setProgressText(t) { var el = $("progress-text"); if (el) el.textContent = t; }
+            function setProgressPercent(p) { var bar = $("progress-bar"); var pct = $("progress-percent"); var v = Math.max(0, Math.min(100, p)); if (bar) bar.style.width = v + "%"; if (pct) pct.textContent = Math.round(v) + "%"; }
+            function setResolutionInfo(info) { var el = $("resolution-info"); if (el) el.textContent = info; }
+            function toAbsUrl(baseUrl, maybeRel) { try { var re = /^https?:\/\//i; if (re.test(maybeRel)) return maybeRel; var u = new URL(baseUrl); var base = u.href.substring(0, u.href.lastIndexOf("/") + 1); return (maybeRel.indexOf("/") === 0) ? (u.origin + maybeRel) : (base + maybeRel); } catch (e) { return maybeRel; } }
+            function parseMediaPlaylist(text, baseUrl) { var lines = text.split("\n"); var segs = []; var isEncrypted = false; for (var i = 0; i < lines.length; i++) { var l = (lines[i] || "").trim(); if (!l) continue; if (l.indexOf("#EXT-X-KEY") === 0) { isEncrypted = true; } if (l.indexOf("#") === 0) continue; var segUrl = toAbsUrl(baseUrl, l); segs.push(segUrl); } return { segments: segs, isEncrypted: isEncrypted }; }
+            function isMasterPlaylist(text) { return /#EXT-X-STREAM-INF/i.test(text); }
+            async function downloadM3U8asMP4(mediaUrl, fileName) {
+                // 不要重置取消状态，保持用户的取消操作
+                // window.downloadCancelled = false; // 删除这行
+
+                var m3u8Res = await fetch(mediaUrl, { method: "GET", credentials: "omit" });
+                if (!m3u8Res.ok) throw new Error("无法获取媒体清单：HTTP " + m3u8Res.status);
+
+                // 检查是否已取消
+                if (window.downloadCancelled) throw new Error("下载已取消");
+
+                var m3u8Text = await m3u8Res.text();
+                var parsed = parseMediaPlaylist(m3u8Text, mediaUrl);
+                var segments = parsed.segments;
+                var isEncrypted = parsed.isEncrypted;
+
+                if (segments.length === 0) throw new Error("清单中未找到分片");
+                if (isEncrypted) throw new Error("检测到加密（#EXT-X-KEY）。暂不支持加密流下载。");
+                if (!(window.muxjs && window.muxjs.mp4 && window.muxjs.mp4.Transmuxer)) throw new Error("mux.js 未加载，无法封装 MP4");
+
+                // 检查是否已取消
+                if (window.downloadCancelled) throw new Error("下载已取消");
+
+                var transmuxer = new window.muxjs.mp4.Transmuxer({ keepOriginalTimestamps: true });
+                var chunks = [];
+                var initAppended = false;
+
+                transmuxer.on("data", function (segment) {
+                    if (!initAppended && segment.initSegment) {
+                        chunks.push(segment.initSegment);
+                        initAppended = true;
+                    }
+                    if (segment.data) chunks.push(segment.data);
+                });
+
+                var total = segments.length;
+                for (var i = 0; i < total; i++) {
+                    // 检查是否已取消
+                    if (window.downloadCancelled) throw new Error("下载已取消");
+
+                    var segUrl = segments[i];
+                    setProgressText("下载与封装分片 " + (i + 1) + " / " + total);
+                    setProgressPercent(((i + 0.25) / total) * 100);
+
+                    var r = await fetch(segUrl, { method: "GET", credentials: "omit" });
+                    if (!r.ok) throw new Error("分片获取失败：HTTP " + r.status);
+
+                    // 检查是否已取消
+                    if (window.downloadCancelled) throw new Error("下载已取消");
+
+                    var ab = await r.arrayBuffer();
+                    setProgressPercent(((i + 0.5) / total) * 100);
+
+                    // 检查是否已取消
+                    if (window.downloadCancelled) throw new Error("下载已取消");
+
+                    transmuxer.push(new Uint8Array(ab));
+                    setProgressPercent(((i + 0.75) / total) * 100);
+                }
+
+                // 检查是否已取消
+                if (window.downloadCancelled) throw new Error("下载已取消");
+
+                transmuxer.flush();
+                setProgressPercent(100);
+
+                var blob = new Blob(chunks, { type: "video/mp4" });
+                var a = document.createElement("a");
+                a.href = URL.createObjectURL(blob);
+                a.download = fileName || "video.mp4";
+                document.body.appendChild(a);
+                a.click();
+
+                setTimeout(function () {
+                    URL.revokeObjectURL(a.href);
+                    a.remove();
+                }, 2000);
+            }
+            window.startDownloadM3U8 = async function (inputUrl) {
+                try {
+                    // 不要重置取消状态，保持用户的取消操作
+                    // window.downloadCancelled = false; // 删除这行
+
+                    showProgressUI(true); setProgressText("分析清单…"); setProgressPercent(0);
+                    var qualitySelect = $("quality-select");
+                    var workUrl = (qualitySelect && qualitySelect.value) ? qualitySelect.value.trim() : inputUrl;
+
+                    // 获取选中的分辨率信息用于显示
+                    var selectedResolution = "默认分辨率";
+                    if (qualitySelect && qualitySelect.value) {
+                        var selectedOption = qualitySelect.options[qualitySelect.selectedIndex];
+                        selectedResolution = selectedOption ? selectedOption.textContent : "选定分辨率";
+                    }
+
+                    // 如果使用的是分辨率选择的URL，直接使用该URL下载，不需要再次解析主播放列表
+                    if (qualitySelect && qualitySelect.value) {
+                        console.log("使用选定的分辨率URL:", workUrl);
+                        console.log("选定的分辨率:", selectedResolution);
+                        setProgressText("正在下载 " + selectedResolution + " 分辨率...");
+                        setResolutionInfo("当前下载分辨率: " + selectedResolution);
+                        await downloadM3U8asMP4(workUrl, "video.mp4");
+                        setProgressText("完成！已下载 " + selectedResolution + " 分辨率视频");
+                    } else {
+                        // 原有逻辑：解析主播放列表
+                        var res = await fetch(workUrl, { method: "GET", credentials: "omit" });
+                        if (!res.ok) throw new Error("无法获取清单：HTTP " + res.status);
+                        var text = await res.text();
+
+                        if (isMasterPlaylist(text)) {
+                            var lines = text.split("\n");
+                            var child = "";
+                            for (var i = 0; i < lines.length; i++) {
+                                var line = (lines[i] || "").trim();
+                                if (line.indexOf("#EXT-X-STREAM-INF") === 0) {
+                                    for (var j = i + 1; j < lines.length; j++) {
+                                        var l2 = (lines[j] || "").trim();
+                                        if (l2 && l2.indexOf("#") !== 0) {
+                                            child = l2;
+                                            break;
+                                        }
+                                    }
+                                    if (child) break;
+                                }
+                            }
+                            if (!child) throw new Error("未找到可用子清单");
+                            workUrl = toAbsUrl(inputUrl, child);
+                        }
+
+                        await downloadM3U8asMP4(workUrl, "video.mp4");
+                        setProgressText("完成！");
+                    }
+                } catch (err) {
+                    console.error(err);
+                    var ebox = $("error-message"); if (ebox) { ebox.textContent = err && err.message ? err.message : "下载失败，请检查链接或跨域策略（CORS）"; ebox.classList.remove("hidden"); setTimeout(function () { ebox.classList.add("hidden"); }, 5000); }
+                } finally {
+                    setTimeout(function () { showProgressUI(false); }, 2000);
+                }
+            }
+        })();
+    </script>
+
+    <!-- 网站底部版权信息 -->
+    <footer class="text-gray-700 py-6" style="background-color: #f4f4f4;">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <!-- 左侧版权信息 -->
+                <div class="mb-4 md:mb-0">
+                    <p class="text-sm text-gray-600">
+                        © 2025 M3U8 Downloader. 安全、简单的M3U8视频下载工具
+                    </p>
+                </div>
+                <!-- 右侧链接 -->
+                <div class="flex space-x-6">
+                    <a href="https://www.m3u8dl.org/privacy-policy.html" class="text-sm text-gray-600 hover:text-gray-800 transition-colors duration-300">
+                        隐私声明
+                    </a>
+                    <a href="https://www.m3u8dl.org/terms-conditions.html" class="text-sm text-gray-600 hover:text-gray-800 transition-colors duration-300">
+                        条款和条件
+                    </a>
+                    <a href="https://www.m3u8dl.org/contact-us.html" class="text-sm text-gray-600 hover:text-gray-800 transition-colors duration-300">
+                        联系我们
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+
+    <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-analytics.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+        apiKey: "AIzaSyCGtjnKlH-INBZu-OBa3raT5c02OnKh5cg",
+        authDomain: "iconai-c9c47.firebaseapp.com",
+        projectId: "iconai-c9c47",
+        storageBucket: "iconai-c9c47.firebasestorage.app",
+        messagingSenderId: "550227159978",
+        appId: "1:550227159978:web:31b1534bea0d2282c3d9d3",
+        measurementId: "G-00L6P3TD5P"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    </script>
+</body>
+
+</html>

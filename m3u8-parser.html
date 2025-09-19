@@ -1,0 +1,882 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <!-- Primary SEO -->
+    <title>M3U8解析器 - M3U8 Downloader</title>
+    <meta content="M3U8文件解析, M3U8结构分析, HLS播放列表解析, M3U8格式检查" name="keywords" />
+    <meta content="专业的M3U8文件解析工具，分析M3U8播放列表结构，检查视频片段信息和元数据。" name="description" />
+    <meta content="index,follow,max-snippet:-1,max-image-preview:large,max-video-preview:-1" name="robots">
+    <!-- Favicons -->
+    <link href="https://www.m3u8dl.org/favicon-96x96.png" rel="icon" sizes="96x96" type="image/png" />
+    <link href="https://www.m3u8dl.org/favicon.svg" rel="icon" type="image/svg+xml" />
+    <link href="https://www.m3u8dl.org/favicon.ico" rel="shortcut icon" />
+    <link href="https://www.m3u8dl.org/apple-touch-icon.png" rel="apple-touch-icon" sizes="180x180" />
+    <link href="https://www.m3u8dl.org/site.webmanifest" rel="manifest" />
+    <!-- Theme -->
+    <meta content="#1a73e8" name="theme-color">
+    <meta content="M3U8 Downloader" name="application-name" />
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet" />
+
+
+    <!-- AdSense (kept in <head> as required) -->
+    <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1086484173623075" crossorigin="anonymous"></script>
+
+    <script src="https://analytics.ahrefs.com/analytics.js" data-key="gqV9g+cYDujAmwBi6s+KNA" async></script>
+
+    <script type="text/javascript">
+    (function(c,l,a,r,i,t,y){
+        c[a]=c[a]||function(){(c[a].q=c[a].q||[]).push(arguments)};
+        t=l.createElement(r);t.async=1;t.src="https://www.clarity.ms/tag/"+i;
+        y=l.getElementsByTagName(r)[0];y.parentNode.insertBefore(t,y);
+    })(window, document, "clarity", "script", "tbxvm2mrdv");
+    </script>   
+</head>
+
+<body class="bg-gradient-to-br from-green-50 via-white to-emerald-50">
+    <!-- 导航栏 -->
+    <nav class="bg-white shadow-sm border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <!-- Logo 和品牌名 -->
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <img alt="M3U8DL Logo" class="w-8 h-8 mr-3"
+                            onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
+                            src="https://www.m3u8dl.org/assets/img/logo.webp" />
+                        <div class="w-8 h-8 bg-green-600 rounded-full flex items-center justify-center mr-3"
+                            style="display:none;">
+                            <i class="fas fa-play text-white text-sm"></i>
+                        </div>
+                        <a href="https://www.m3u8dl.org/index.html" class="text-xl font-bold text-gray-900 hover:text-green-600 transition-colors">M3U8 Downloader</a>
+                    </div>
+                </div>
+                <!-- Navigation Links -->
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="https://www.m3u8dl.org/index.html" class="text-gray-700 hover:text-green-600 px-3 py-2 text-sm font-medium transition-colors flex items-center">
+                        <i class="fas fa-home mr-2"></i>首页
+                    </a>
+                    <a href="https://www.m3u8dl.org/m3u8-player.html" class="text-gray-700 hover:text-green-600 px-3 py-2 text-sm font-medium transition-colors flex items-center">
+                        <i class="fas fa-play-circle mr-2"></i>M3U8 播放器
+                    </a>
+                    <a href="https://www.m3u8dl.org/m3u8-parser.html" class="text-green-600 px-3 py-2 text-sm font-medium border-b-2 border-green-600 flex items-center">
+                        <i class="fas fa-search mr-2 text-green-600"></i>M3U8 解析
+                    </a>
+                    <a href="https://www.m3u8dl.org/documentation.html" class="text-gray-700 hover:text-green-600 px-3 py-2 text-sm font-medium transition-colors flex items-center">
+                        <i class="fas fa-book mr-2"></i>文档
+                    </a>
+                    <!-- Language Switcher -->
+                    <div class="relative">
+                        <button id="languageToggle" class="flex items-center text-gray-700 hover:text-green-600 px-3 py-2 text-sm font-medium transition-colors">
+                            <i class="fas fa-globe mr-2"></i>
+                            <span>中文</span>
+                            <i class="fas fa-chevron-down ml-1 text-xs"></i>
+                        </button>
+                        <div id="languageDropdown" class="absolute right-0 mt-2 w-32 bg-white rounded-md shadow-lg py-1 z-50 hidden">
+                            <a href="#" class="block px-4 py-2 text-sm text-green-600 bg-green-50">中文</a>
+                            <a href="https://www.m3u8dl.org/en/m3u8-parser.html" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100">English</a>
+                        </div>
+                    </div>
+                </div>
+                <!-- Mobile menu button -->
+                <div class="md:hidden flex items-center">
+                    <button id="mobileMenuToggle" class="text-gray-700 hover:text-green-600 focus:outline-none">
+                        <i class="fas fa-bars text-xl"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <!-- Mobile Menu -->
+        <div id="mobileMenu" class="md:hidden bg-white border-t border-gray-200 hidden">
+            <div class="px-4 py-2 space-y-1">
+                <a href="https://www.m3u8dl.org/index.html" class="block px-3 py-2 text-gray-700 hover:text-green-600 text-sm font-medium flex items-center">
+                    <i class="fas fa-home mr-2"></i>首页
+                </a>
+                <a href="https://www.m3u8dl.org/m3u8-player.html" class="block px-3 py-2 text-gray-700 hover:text-green-600 text-sm font-medium flex items-center">
+                    <i class="fas fa-play-circle mr-2"></i>M3U8 播放器
+                </a>
+                <a href="https://www.m3u8dl.org/m3u8-parser.html" class="block px-3 py-2 text-green-600 text-sm font-medium bg-green-50 flex items-center">
+                    <i class="fas fa-search mr-2 text-green-600"></i>M3U8 解析
+                </a>
+                <a href="https://www.m3u8dl.org/documentation.html" class="block px-3 py-2 text-gray-700 hover:text-green-600 text-sm font-medium flex items-center">
+                    <i class="fas fa-book mr-2"></i>文档
+                </a>
+                <hr class="my-2">
+                <a href="#" class="block px-3 py-2 text-green-600 text-sm bg-green-50">中文</a>
+                <a href="https://www.m3u8dl.org/en/m3u8-parser.html" class="block px-3 py-2 text-gray-700 hover:text-green-600 text-sm">English</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- 主要内容 -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- 页面标题 -->
+        <div class="text-center mb-8">
+            <h1 class="text-4xl font-bold text-gray-900 mb-4">
+                <i class="fas fa-search text-green-600 mr-3"></i>
+                M3U8 文件解析器
+            </h1>
+            <p class="text-lg text-gray-600 max-w-3xl mx-auto">
+                分析M3U8播放列表文件结构，检查视频片段信息、时长和元数据
+            </p>
+        </div>
+
+        <!-- 解析器区域 -->
+        <div class="bg-white rounded-2xl shadow-lg p-6 mb-8">
+            <!-- 输入区域 -->
+            <div class="mb-6">
+                <label class="block text-sm font-medium text-gray-700 mb-2" for="parser-url-input">
+                    <i class="fas fa-link mr-2"></i>
+                    M3U8 文件链接
+                </label>
+                <div class="flex gap-3">
+                    <input
+                        class="flex-1 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                        id="parser-url-input" placeholder="请输入M3U8文件链接..." type="url" />
+                    <button
+                        class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-medium transition-colors duration-300 flex items-center"
+                        id="parse-btn">
+                        <i class="fas fa-search mr-2"></i>
+                        解析
+                    </button>
+                </div>
+                <p class="text-sm text-gray-500 mt-2">
+                    支持以 .m3u8 结尾的HLS播放列表文件
+                    <button class="text-green-600 hover:underline ml-2" id="fill-demo-parser" type="button">使用示例链接</button>
+                </p>
+            </div>
+
+            <!-- 解析结果区域 -->
+            <div class="hidden" id="parse-results">
+                <!-- 基本信息 -->
+                <div class="mb-6">
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">
+                        <i class="fas fa-info-circle text-blue-600 mr-2"></i>
+                        基本信息
+                    </h3>
+                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
+                        <div class="bg-blue-50 rounded-lg p-4">
+                            <div class="text-sm text-gray-600">文件类型</div>
+                            <div class="text-lg font-semibold text-gray-900" id="file-type">--</div>
+                        </div>
+                        <div class="bg-green-50 rounded-lg p-4">
+                            <div class="text-sm text-gray-600">总时长</div>
+                            <div class="text-lg font-semibold text-gray-900" id="total-duration">--</div>
+                        </div>
+                        <div class="bg-yellow-50 rounded-lg p-4">
+                            <div class="text-sm text-gray-600">片段数量</div>
+                            <div class="text-lg font-semibold text-gray-900" id="segment-count">--</div>
+                        </div>
+                        <div class="bg-purple-50 rounded-lg p-4">
+                            <div class="text-sm text-gray-600">目标时长</div>
+                            <div class="text-lg font-semibold text-gray-900" id="target-duration">--</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 质量级别 -->
+                <div class="mb-6 hidden" id="quality-levels-section">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-lg font-semibold text-gray-900">
+                            <i class="fas fa-layer-group text-purple-600 mr-2"></i>
+                            质量级别
+                        </h3>
+                        <button class="bg-green-600 hover:bg-green-700 text-white px-3 py-1.5 rounded-md text-sm font-medium transition-colors duration-300 flex items-center" id="copy-quality-btn">
+                            <i class="fas fa-copy mr-1.5"></i>
+                            复制
+                        </button>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full bg-white border border-gray-200 rounded-lg">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">分辨率</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">码率</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">编解码器</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">链接</th>
+                                </tr>
+                            </thead>
+                            <tbody id="quality-levels-table" class="divide-y divide-gray-200">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- 视频片段 -->
+                <div class="mb-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-lg font-semibold text-gray-900">
+                            <i class="fas fa-film text-orange-600 mr-2"></i>
+                            视频片段 <span class="text-sm text-gray-500" id="segments-info">(显示前10个)</span>
+                        </h3>
+                        <button class="bg-green-600 hover:bg-green-700 text-white px-3 py-1.5 rounded-md text-sm font-medium transition-colors duration-300 flex items-center" id="copy-segments-btn">
+                            <i class="fas fa-copy mr-1.5"></i>
+                            复制
+                        </button>
+                    </div>
+                    <div class="overflow-x-auto">
+                        <table class="min-w-full bg-white border border-gray-200 rounded-lg">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">#</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">时长</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">文件名</th>
+                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">状态</th>
+                                </tr>
+                            </thead>
+                            <tbody id="segments-table" class="divide-y divide-gray-200">
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- 原始内容 -->
+                <div class="mb-6">
+                    <div class="flex justify-between items-center mb-4">
+                        <h3 class="text-lg font-semibold text-gray-900">
+                            <i class="fas fa-code text-gray-600 mr-2"></i>
+                            原始内容
+                        </h3>
+                        <button class="bg-green-600 hover:bg-green-700 text-white px-3 py-1.5 rounded-md text-sm font-medium transition-colors duration-300 flex items-center" id="copy-raw-btn">
+                            <i class="fas fa-copy mr-1.5"></i>
+                            复制
+                        </button>
+                    </div>
+                    <div class="bg-gray-900 rounded-lg p-4 overflow-x-auto">
+                        <pre class="text-green-400 text-sm font-mono whitespace-pre-wrap" id="raw-content"></pre>
+                    </div>
+                </div>
+            </div>
+
+            <!-- 加载状态 -->
+            <div class="hidden text-center py-8" id="loading-state">
+                <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600 mx-auto mb-4"></div>
+                <p class="text-lg text-gray-600">正在解析M3U8文件...</p>
+            </div>
+        </div>
+
+        <!-- 功能特性 -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
+            <div class="bg-white rounded-xl shadow-lg p-6">
+                <div class="flex items-center mb-4">
+                    <div class="bg-green-100 rounded-lg p-3 mr-4">
+                        <i class="fas fa-search text-green-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-900">深度解析</h3>
+                </div>
+                <p class="text-gray-600">
+                    详细分析M3U8文件结构，提取所有元数据和片段信息
+                </p>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-lg p-6">
+                <div class="flex items-center mb-4">
+                    <div class="bg-blue-100 rounded-lg p-3 mr-4">
+                        <i class="fas fa-layer-group text-blue-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-900">多级别支持</h3>
+                </div>
+                <p class="text-gray-600">
+                    支持主播放列表和媒体播放列表的解析，识别不同质量级别
+                </p>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-lg p-6">
+                <div class="flex items-center mb-4">
+                    <div class="bg-purple-100 rounded-lg p-3 mr-4">
+                        <i class="fas fa-chart-bar text-purple-600 text-xl"></i>
+                    </div>
+                    <h3 class="text-lg font-semibold text-gray-900">统计分析</h3>
+                </div>
+                <p class="text-gray-600">
+                    提供详细的统计信息，包括总时长、片段数量等关键指标
+                </p>
+            </div>
+        </div>
+
+        <!-- 使用说明 -->
+        <div class="bg-white rounded-2xl shadow-lg p-8">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6">
+                <i class="fas fa-question-circle text-green-600 mr-3"></i>
+                使用说明
+            </h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">如何使用解析器</h3>
+                    <ol class="space-y-3 text-gray-600">
+                        <li class="flex items-start">
+                            <span class="bg-green-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold mr-3 mt-0.5">1</span>
+                            在输入框中粘贴您的M3U8文件链接
+                        </li>
+                        <li class="flex items-start">
+                            <span class="bg-green-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold mr-3 mt-0.5">2</span>
+                            点击"解析"按钮开始分析文件
+                        </li>
+                        <li class="flex items-start">
+                            <span class="bg-green-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold mr-3 mt-0.5">3</span>
+                            查看详细的解析结果和统计信息
+                        </li>
+                    </ol>
+                </div>
+                <div>
+                    <h3 class="text-lg font-semibold text-gray-900 mb-4">解析内容</h3>
+                    <ul class="space-y-2 text-gray-600">
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-600 mr-3"></i>
+                            文件类型和版本信息
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-600 mr-3"></i>
+                            视频总时长和片段数量
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-600 mr-3"></i>
+                            不同质量级别的详细信息
+                        </li>
+                        <li class="flex items-center">
+                            <i class="fas fa-check text-green-600 mr-3"></i>
+                            每个视频片段的时长和状态
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- 网站页脚 -->
+    <footer class="text-gray-700 py-6" style="background-color: #f4f4f4;">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex flex-col md:flex-row justify-between items-center">
+                <!-- 左侧版权信息 -->
+                <div class="mb-4 md:mb-0">
+                    <p class="text-sm text-gray-600">
+                        © 2025 M3U8 Downloader. 安全简单的M3U8视频下载工具
+                    </p>
+                </div>
+                <!-- 右侧链接 -->
+                <div class="flex space-x-6">
+                    <a href="https://www.m3u8dl.org/privacy-policy.html" class="text-sm text-gray-600 hover:text-gray-800 transition-colors duration-300">
+                        隐私声明
+                    </a>
+                    <a href="https://www.m3u8dl.org/terms-conditions.html" class="text-sm text-gray-600 hover:text-gray-800 transition-colors duration-300">
+                        条款和条件
+                    </a>
+                    <a href="https://www.m3u8dl.org/contact-us.html" class="text-sm text-gray-600 hover:text-gray-800 transition-colors duration-300">
+                        联系我们
+                    </a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- 错误提示 -->
+    <div class="hidden fixed top-20 left-1/2 transform -translate-x-1/2 z-50 bg-red-100 border border-red-400 text-red-700 px-6 py-4 rounded-lg shadow-lg"
+        id="error-message">
+        <div class="flex items-center">
+            <i class="fas fa-exclamation-triangle mr-3"></i>
+            <span id="error-text"></span>
+        </div>
+    </div>
+
+    <script>
+        // 复制质量级别链接的函数 - 全局作用域
+        function copyQualityUrl(url, buttonElement) {
+            console.log('尝试复制链接:', url);
+            
+            const button = buttonElement || event.target.closest('button');
+            if (!button) {
+                console.error('未找到按钮元素');
+                return;
+            }
+            
+            // 显示成功反馈的函数
+            function showSuccess() {
+                const originalText = button.innerHTML;
+                button.innerHTML = '<i class="fas fa-check mr-1"></i>已复制';
+                button.classList.remove('bg-green-600', 'hover:bg-green-700');
+                button.classList.add('bg-green-700');
+                
+                setTimeout(() => {
+                    button.innerHTML = originalText;
+                    button.classList.remove('bg-green-700');
+                    button.classList.add('bg-green-600', 'hover:bg-green-700');
+                }, 2000);
+            }
+            
+            // 备用复制方法
+            function fallbackCopy(text) {
+                const textArea = document.createElement('textarea');
+                textArea.value = text;
+                textArea.style.position = 'fixed';
+                textArea.style.left = '-999999px';
+                textArea.style.top = '-999999px';
+                document.body.appendChild(textArea);
+                textArea.focus();
+                textArea.select();
+                
+                try {
+                    const result = document.execCommand('copy');
+                    document.body.removeChild(textArea);
+                    return result;
+                } catch (err) {
+                    console.error('备用复制方法失败:', err);
+                    document.body.removeChild(textArea);
+                    return false;
+                }
+            }
+            
+            // 尝试使用现代 Clipboard API
+            if (navigator.clipboard && window.isSecureContext) {
+                console.log('使用 Clipboard API');
+                navigator.clipboard.writeText(url).then(function() {
+                    console.log('Clipboard API 复制成功');
+                    showSuccess();
+                }).catch(function(err) {
+                    console.error('Clipboard API 失败:', err);
+                    // 回退到传统方法
+                    if (fallbackCopy(url)) {
+                        console.log('备用方法复制成功');
+                        showSuccess();
+                    } else {
+                        alert('复制失败，请手动复制链接:\n' + url);
+                    }
+                });
+            } else {
+                console.log('使用备用复制方法');
+                // 直接使用传统方法
+                if (fallbackCopy(url)) {
+                    console.log('备用方法复制成功');
+                    showSuccess();
+                } else {
+                    alert('复制失败，请手动复制链接:\n' + url);
+                }
+            }
+        }
+
+        // 移动端菜单功能
+        document.addEventListener('DOMContentLoaded', function () {
+            const mobileMenuButton = document.getElementById('mobileMenuToggle');
+            const mobileMenu = document.getElementById('mobileMenu');
+
+            if (mobileMenuButton && mobileMenu) {
+                mobileMenuButton.addEventListener('click', function () {
+                    mobileMenu.classList.toggle('hidden');
+                });
+            }
+
+            // 语言切换下拉菜单功能
+            const languageButton = document.getElementById('language-button');
+            const languageMenu = document.getElementById('language-menu');
+
+            if (languageButton && languageMenu) {
+                languageButton.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                    languageMenu.classList.toggle('hidden');
+                });
+
+                document.addEventListener('click', function () {
+                    if (!languageMenu.classList.contains('hidden')) {
+                        languageMenu.classList.add('hidden');
+                    }
+                });
+
+                languageMenu.addEventListener('click', function (e) {
+                    e.stopPropagation();
+                });
+            }
+
+            // M3U8解析器功能
+            const urlInput = document.getElementById('parser-url-input');
+            const parseBtn = document.getElementById('parse-btn');
+            const parseResults = document.getElementById('parse-results');
+            const loadingState = document.getElementById('loading-state');
+            const errorMessage = document.getElementById('error-message');
+            const errorText = document.getElementById('error-text');
+            const fillDemoBtn = document.getElementById('fill-demo-parser');
+
+            // 示例链接
+            fillDemoBtn.addEventListener('click', function () {
+                urlInput.value = 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8';
+            });
+
+            // 显示错误信息
+            function showError(message) {
+                errorText.textContent = message;
+                errorMessage.classList.remove('hidden');
+                setTimeout(() => {
+                    errorMessage.classList.add('hidden');
+                }, 5000);
+            }
+
+            // 格式化时间
+            function formatTime(seconds) {
+                if (isNaN(seconds)) return '--:--';
+                const hours = Math.floor(seconds / 3600);
+                const minutes = Math.floor((seconds % 3600) / 60);
+                const remainingSeconds = Math.floor(seconds % 60);
+                
+                if (hours > 0) {
+                    return `${hours}:${minutes.toString().padStart(2, '0')}:${remainingSeconds.toString().padStart(2, '0')}`;
+                } else {
+                    return `${minutes}:${remainingSeconds.toString().padStart(2, '0')}`;
+                }
+            }
+
+            // 格式化文件大小
+            function formatBytes(bytes) {
+                if (bytes === 0) return '0 B';
+                const k = 1024;
+                const sizes = ['B', 'KB', 'MB', 'GB'];
+                const i = Math.floor(Math.log(bytes) / Math.log(k));
+                return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+            }
+
+            // 解析M3U8文件
+            async function parseM3U8(url) {
+                if (!url) {
+                    showError('请输入有效的M3U8链接');
+                    return;
+                }
+
+                // 验证URL格式
+                if (!url.match(/^https?:\/\/.+\.m3u8(\?.*)?$/i)) {
+                    showError('请输入有效的M3U8链接（以.m3u8结尾）');
+                    return;
+                }
+
+                // 显示加载状态
+                parseResults.classList.add('hidden');
+                loadingState.classList.remove('hidden');
+
+                try {
+                    const response = await fetch(url);
+                    if (!response.ok) {
+                        throw new Error(`HTTP ${response.status}: ${response.statusText}`);
+                    }
+
+                    const content = await response.text();
+                    
+                    // 隐藏加载状态
+                    loadingState.classList.add('hidden');
+                    
+                    // 解析内容
+                    const parseResult = parseM3U8Content(content, url);
+                    displayResults(parseResult, content);
+                    
+                    // 显示结果
+                    parseResults.classList.remove('hidden');
+
+                } catch (error) {
+                    loadingState.classList.add('hidden');
+                    showError('解析失败: ' + error.message);
+                }
+            }
+
+            // 解析M3U8内容
+            function parseM3U8Content(content, baseUrl) {
+                const lines = content.split('\n').map(line => line.trim()).filter(line => line);
+                const result = {
+                    type: 'unknown',
+                    version: null,
+                    targetDuration: null,
+                    totalDuration: 0,
+                    segments: [],
+                    qualities: [],
+                    isPlaylist: false
+                };
+
+                let currentSegment = null;
+                let currentDuration = 0;
+
+                for (let i = 0; i < lines.length; i++) {
+                    const line = lines[i];
+
+                    // 检查文件头
+                    if (line === '#EXTM3U') {
+                        result.type = 'M3U8';
+                        continue;
+                    }
+
+                    // 版本信息
+                    if (line.startsWith('#EXT-X-VERSION:')) {
+                        result.version = parseInt(line.split(':')[1]);
+                        continue;
+                    }
+
+                    // 目标时长
+                    if (line.startsWith('#EXT-X-TARGETDURATION:')) {
+                        result.targetDuration = parseInt(line.split(':')[1]);
+                        continue;
+                    }
+
+                    // 检查是否为主播放列表
+                    if (line.startsWith('#EXT-X-STREAM-INF:')) {
+                        result.isPlaylist = true;
+                        const attributes = parseAttributes(line.split(':')[1]);
+                        const nextLine = lines[i + 1];
+                        if (nextLine && !nextLine.startsWith('#')) {
+                            result.qualities.push({
+                                bandwidth: attributes.BANDWIDTH || 'Unknown',
+                                resolution: attributes.RESOLUTION || 'Unknown',
+                                codecs: attributes.CODECS || 'Unknown',
+                                url: nextLine
+                            });
+                            i++; // 跳过下一行
+                        }
+                        continue;
+                    }
+
+                    // 片段信息
+                    if (line.startsWith('#EXTINF:')) {
+                        const duration = parseFloat(line.split(':')[1].split(',')[0]);
+                        currentDuration = duration;
+                        result.totalDuration += duration;
+                        continue;
+                    }
+
+                    // 片段URL
+                    if (!line.startsWith('#') && currentDuration > 0) {
+                        result.segments.push({
+                            duration: currentDuration,
+                            url: line,
+                            index: result.segments.length + 1
+                        });
+                        currentDuration = 0;
+                    }
+                }
+
+                return result;
+            }
+
+            // 解析属性字符串
+            function parseAttributes(attrString) {
+                const attributes = {};
+                const regex = /([A-Z-]+)=("[^"]*"|[^,]*)/g;
+                let match;
+                
+                while ((match = regex.exec(attrString)) !== null) {
+                    let value = match[2];
+                    if (value.startsWith('"') && value.endsWith('"')) {
+                        value = value.slice(1, -1);
+                    }
+                    attributes[match[1]] = value;
+                }
+                
+                return attributes;
+            }
+
+            // 显示解析结果
+            function displayResults(result, rawContent) {
+                // 基本信息
+                document.getElementById('file-type').textContent = result.type;
+                document.getElementById('total-duration').textContent = formatTime(result.totalDuration);
+                document.getElementById('segment-count').textContent = result.segments.length;
+                document.getElementById('target-duration').textContent = result.targetDuration ? result.targetDuration + 's' : '--';
+
+                // 质量级别
+                const qualitySection = document.getElementById('quality-levels-section');
+                const qualityTable = document.getElementById('quality-levels-table');
+                
+                if (result.isPlaylist && result.qualities.length > 0) {
+                    qualitySection.classList.remove('hidden');
+                    qualityTable.innerHTML = '';
+                    
+                    result.qualities.forEach((quality, index) => {
+                        // 确保链接是完整的URL
+                        let fullUrl = quality.url;
+                        if (!quality.url.startsWith('http')) {
+                            const baseUrlObj = new URL(urlInput.value.trim());
+                            fullUrl = new URL(quality.url, baseUrlObj.origin + baseUrlObj.pathname.substring(0, baseUrlObj.pathname.lastIndexOf('/') + 1)).href;
+                        }
+                        
+                        const row = document.createElement('tr');
+                        row.innerHTML = `
+                            <td class="px-4 py-3 text-sm text-gray-900">${quality.resolution}</td>
+                            <td class="px-4 py-3 text-sm text-gray-900">${formatBytes(parseInt(quality.bandwidth) / 8)}/s</td>
+                            <td class="px-4 py-3 text-sm text-gray-900">${quality.codecs}</td>
+                            <td class="px-4 py-3 text-sm">
+                                <div class="flex items-center gap-2">
+                                    <a href="${fullUrl}" target="_blank" class="hover:underline flex-1 truncate min-w-0" title="${fullUrl}">${fullUrl}</a>
+                                    <button onclick="copyQualityUrl('${fullUrl}', this)" class="flex-shrink-0 px-2 py-1 bg-green-600 hover:bg-green-700 text-white text-xs rounded-md transition-colors duration-200 flex items-center whitespace-nowrap">
+                                        <i class="fas fa-copy mr-1"></i>复制
+                                    </button>
+                                </div>
+                            </td>
+                        `;
+                        qualityTable.appendChild(row);
+                    });
+                } else {
+                    qualitySection.classList.add('hidden');
+                }
+
+                // 视频片段
+                const segmentsTable = document.getElementById('segments-table');
+                const segmentsInfo = document.getElementById('segments-info');
+                segmentsTable.innerHTML = '';
+                
+                const displaySegments = result.segments.slice(0, 10);
+                segmentsInfo.textContent = result.segments.length > 10 ? 
+                    `(显示前10个，共${result.segments.length}个)` : 
+                    `(共${result.segments.length}个)`;
+
+                displaySegments.forEach(segment => {
+                    const row = document.createElement('tr');
+                    row.innerHTML = `
+                        <td class="px-4 py-3 text-sm text-gray-900">${segment.index}</td>
+                        <td class="px-4 py-3 text-sm text-gray-900">${segment.duration.toFixed(2)}s</td>
+                        <td class="px-4 py-3 text-sm text-blue-600 truncate max-w-xs">
+                            <a href="${segment.url}" target="_blank" class="hover:underline">${segment.url.split('/').pop()}</a>
+                        </td>
+                        <td class="px-4 py-3 text-sm">
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-800">
+                                正常
+                            </span>
+                        </td>
+                    `;
+                    segmentsTable.appendChild(row);
+                });
+
+                // 原始内容
+                document.getElementById('raw-content').textContent = rawContent;
+            }
+
+            // 解析按钮事件
+            parseBtn.addEventListener('click', function () {
+                const url = urlInput.value.trim();
+                parseM3U8(url);
+            });
+
+            // 回车键解析
+            urlInput.addEventListener('keypress', function (e) {
+                if (e.key === 'Enter') {
+                    const url = urlInput.value.trim();
+                    parseM3U8(url);
+                }
+            });
+
+            // 示例链接按钮事件
+            document.getElementById('fill-demo-parser').addEventListener('click', function() {
+                const testUrl = 'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8';
+                urlInput.value = testUrl;
+                // 自动开始解析
+                parseM3U8(testUrl);
+            });
+
+            // 复制功能
+            function copyToClipboard(text, buttonId) {
+                navigator.clipboard.writeText(text).then(function() {
+                    const button = document.getElementById(buttonId);
+                    const originalText = button.innerHTML;
+                    button.innerHTML = '<i class="fas fa-check mr-1.5"></i>已复制';
+                    button.classList.remove('bg-green-600', 'hover:bg-green-700');
+                    button.classList.add('bg-green-500');
+                    
+                    setTimeout(function() {
+                        button.innerHTML = originalText;
+                        button.classList.remove('bg-green-500');
+                        button.classList.add('bg-green-600', 'hover:bg-green-700');
+                    }, 2000);
+                }).catch(function(err) {
+                    console.error('复制失败:', err);
+                    showError('复制失败，请手动复制');
+                });
+            }
+
+            // 质量级别复制按钮
+            document.getElementById('copy-quality-btn').addEventListener('click', function() {
+                const table = document.getElementById('quality-levels-table');
+                let text = '分辨率\t码率\t编解码器\t链接\n';
+                const rows = table.querySelectorAll('tr');
+                rows.forEach(row => {
+                    const cells = row.querySelectorAll('td');
+                    if (cells.length > 0) {
+                        const rowData = Array.from(cells).map(cell => cell.textContent.trim()).join('\t');
+                        text += rowData + '\n';
+                    }
+                });
+                copyToClipboard(text, 'copy-quality-btn');
+            });
+
+            // 视频片段复制按钮
+            document.getElementById('copy-segments-btn').addEventListener('click', function() {
+                const table = document.getElementById('segments-table');
+                let text = '#\t时长\t文件名\t状态\n';
+                const rows = table.querySelectorAll('tr');
+                rows.forEach(row => {
+                    const cells = row.querySelectorAll('td');
+                    if (cells.length > 0) {
+                        const rowData = Array.from(cells).map(cell => cell.textContent.trim()).join('\t');
+                        text += rowData + '\n';
+                    }
+                });
+                copyToClipboard(text, 'copy-segments-btn');
+            });
+
+            // 原始内容复制按钮
+            document.getElementById('copy-raw-btn').addEventListener('click', function() {
+                const rawContent = document.getElementById('raw-content').textContent;
+                copyToClipboard(rawContent, 'copy-raw-btn');
+            });
+
+            // Mobile menu toggle (removed duplicate)
+            // Language dropdown toggle
+            document.getElementById('languageToggle').addEventListener('click', function() {
+                const dropdown = document.getElementById('languageDropdown');
+                dropdown.classList.toggle('hidden');
+            });
+
+            // Close dropdown when clicking outside
+            document.addEventListener('click', function(event) {
+                const toggle = document.getElementById('languageToggle');
+                const dropdown = document.getElementById('languageDropdown');
+                if (!toggle.contains(event.target) && !dropdown.contains(event.target)) {
+                    dropdown.classList.add('hidden');
+                }
+            });
+
+            // 检查URL参数并自动填入链接
+            const urlParams = new URLSearchParams(window.location.search);
+            const urlParam = urlParams.get('url');
+            if (urlParam) {
+                const urlInput = document.getElementById('parser-url-input');
+                urlInput.value = decodeURIComponent(urlParam);
+                // 自动开始解析
+                setTimeout(function() {
+                    parseM3U8(urlInput.value);
+                }, 500);
+            }
+        });
+    </script>
+
+
+    <script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-analytics.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+
+    // Your web app's Firebase configuration
+    // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+    const firebaseConfig = {
+        apiKey: "AIzaSyCGtjnKlH-INBZu-OBa3raT5c02OnKh5cg",
+        authDomain: "iconai-c9c47.firebaseapp.com",
+        projectId: "iconai-c9c47",
+        storageBucket: "iconai-c9c47.firebasestorage.app",
+        messagingSenderId: "550227159978",
+        appId: "1:550227159978:web:31b1534bea0d2282c3d9d3",
+        measurementId: "G-00L6P3TD5P"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
+    </script>
+</body>
+
+</html>
