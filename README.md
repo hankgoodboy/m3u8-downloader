@@ -176,7 +176,7 @@ php -S localhost:8000
 ## 📞 联系我们
 
 - **网站**: [https://www.m3u8dl.org](https://www.m3u8dl.org)
-- **邮箱**: hb494974108@g
+- **邮箱**: hb494974108@gmail.com
 - **联系页面**: [https://www.m3u8dl.org/contact-us.html](https://www.m3u8dl.org/contact-us.html)
 
 ---
