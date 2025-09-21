@@ -2,7 +2,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Website](https://img.shields.io/badge/Website-www.m3u8dl.org-green.svg)](https://www.m3u8dl.org)
-[![GitHub Stars](https://img.shields.io/github/stars/yourusername/m3u8dl-github.svg)](https://github.com/yourusername/m3u8dl-github)
+[![GitHub Stars](https://img.shields.io/github/stars/hankgoodboy/m3u8-downloader.svg)](https://github.com/hankgoodboy/m3u8-downloader)
 
 > 🚀 **Free Online M3U8 Video Downloader** - Secure, Simple, and Efficient Streaming Video Download Solution
 
@@ -94,8 +94,8 @@ Visit directly: [https://www.m3u8dl.org](https://www.m3u8dl.org)
 
 1. **Clone the Project**
 ```bash
-git clone https://github.com/yourusername/m3u8dl-github.git
-cd m3u8dl-github
+git clone https://github.com/hankgoodboy/m3u8-downloader.git
+cd m3u8-downloader
 ```
 
 2. **Start Local Server**
@@ -178,6 +178,14 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - **Website**: [https://www.m3u8dl.org](https://www.m3u8dl.org)
 - **Email**: hb494974108@gmail.com
 - **Contact Page**: [https://www.m3u8dl.org/contact-us.html](https://www.m3u8dl.org/contact-us.html)
+
+### 💬 Learning & Communication
+
+Welcome to add WeChat for technical exchange and learning discussions:
+
+<img src="https://www.m3u8dl.org/assets/img/wx.jpg" alt="WeChat QR Code" width="200" height="200">
+
+*Scan to add WeChat and discuss technical issues together*
 
 ---
 

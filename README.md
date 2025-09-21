@@ -2,7 +2,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Website](https://img.shields.io/badge/Website-www.m3u8dl.org-green.svg)](https://www.m3u8dl.org)
-[![GitHub Stars](https://img.shields.io/github/stars/yourusername/m3u8dl-github.svg)](https://github.com/yourusername/m3u8dl-github)
+[![GitHub Stars](https://img.shields.io/github/stars/yourusername/m3u8dl-github.svg)](https://github.com/hankgoodboy/m3u8-downloader)
 
 > 🚀 **免费在线M3U8视频下载工具** - 安全、简单、高效的流媒体视频下载解决方案
 
@@ -94,8 +94,8 @@ m3u8dl-github/
 
 1. **克隆项目**
 ```bash
-git clone https://github.com/yourusername/m3u8dl-github.git
-cd m3u8dl-github
+git clone https://github.com/hankgoodboy/m3u8-downloader
+cd m3u8-downloader
 ```
 
 2. **启动本地服务器**
@@ -178,6 +178,14 @@ php -S localhost:8000
 - **网站**: [https://www.m3u8dl.org](https://www.m3u8dl.org)
 - **邮箱**: hb494974108@gmail.com
 - **联系页面**: [https://www.m3u8dl.org/contact-us.html](https://www.m3u8dl.org/contact-us.html)
+
+### 💬 学习交流
+
+欢迎添加微信进行技术交流和学习讨论：
+
+<img src="https://www.m3u8dl.org/assets/img/wx.jpg" alt="微信二维码" width="200" height="200">
+
+*扫码添加微信，一起探讨技术问题*
 
 ---
 
