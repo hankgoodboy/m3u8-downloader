@@ -2,7 +2,7 @@
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Website](https://img.shields.io/badge/Website-www.m3u8dl.org-green.svg)](https://www.m3u8dl.org)
-[![GitHub Stars](https://img.shields.io/github/stars/yourusername/m3u8dl-github.svg)](https://github.com/hankgoodboy/m3u8-downloader)
+[![GitHub Stars](https://img.shields.io/github/stars/hankgoodboy/m3u8-downloader.svg)](https://github.com/hankgoodboy/m3u8-downloader)
 
 > 🚀 **免费在线M3U8视频下载工具** - 安全、简单、高效的流媒体视频下载解决方案
 
