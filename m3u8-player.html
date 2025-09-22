@@ -117,136 +117,136 @@
     </nav>
 
     <!-- Main Content -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
         <!-- 页面标题 -->
-        <div class="text-center mb-12">
-            <h1 class="text-4xl font-bold text-gray-900 mb-4">
-                <i class="fas fa-play-circle text-green-600 mr-3"></i>
-                M3U8 视频播放器
+        <div class="text-center mb-8 sm:mb-10 md:mb-12">
+            <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 sm:mb-4 flex flex-col sm:flex-row items-center justify-center">
+                <i class="fas fa-play-circle text-green-600 mb-2 sm:mb-0 sm:mr-3 text-xl sm:text-2xl md:text-3xl"></i>
+                <span>M3U8 视频播放器</span>
             </h1>
-            <p class="text-xl text-gray-600 max-w-3xl mx-auto">专业的HLS视频播放器，支持自适应码率流、全屏播放和多种视频格式</p>
+            <p class="text-base sm:text-lg md:text-xl text-gray-600 max-w-3xl mx-auto px-2">专业的HLS视频播放器，支持自适应码率流、全屏播放和多种视频格式</p>
         </div>
 
         <!-- 播放器区域 -->
-        <div class="bg-white rounded-lg shadow-lg p-6 mb-8">
-            <div class="mb-6">
+        <div class="bg-white rounded-lg shadow-lg p-4 sm:p-6 mb-6 sm:mb-8">
+            <div class="mb-4 sm:mb-6">
                 <label for="m3u8Url" class="block text-sm font-medium text-gray-700 mb-2">
                     <i class="fas fa-link mr-2 text-gray-500"></i>M3U8 视频链接
                 </label>
-                <div class="flex gap-3">
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-3">
                     <input type="url" id="m3u8Url" placeholder="请输入M3U8链接，按回车键或点击播放按钮开始..."
-                        class="flex-1 px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent">
-                    <button id="loadVideo" class="px-6 py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-medium">
+                        class="flex-1 px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent text-sm sm:text-base">
+                    <button id="loadVideo" class="px-4 sm:px-6 py-2 sm:py-3 bg-green-600 text-white rounded-lg hover:bg-green-700 transition-colors font-medium text-sm sm:text-base w-full sm:w-auto">
                         <i class="fas fa-play mr-2"></i>播放
                     </button>
                 </div>
-                <p class="text-sm text-gray-500 mt-2">
+                <p class="text-xs sm:text-sm text-gray-500 mt-2 px-1">
                     支持以.m3u8结尾的HLS流媒体链接，输入后按回车键即可播放
-                    <button class="text-green-600 hover:underline ml-2" id="testLinkBtn" type="button">试试示例链接</button>
+                    <button class="text-green-600 hover:underline ml-1 sm:ml-2 font-medium" id="testLinkBtn" type="button">试试示例链接</button>
                 </p>
             </div>
 
             <!-- 视频播放器 -->
-            <div class="bg-black rounded-lg overflow-hidden mb-4" style="aspect-ratio: 16/9;">
+            <div class="bg-black rounded-lg overflow-hidden mb-3 sm:mb-4" style="aspect-ratio: 16/9;">
                 <video id="videoPlayer" class="w-full h-full" controls poster="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 800 450'%3E%3Crect width='800' height='450' fill='%23000'/%3E%3Ctext x='400' y='225' text-anchor='middle' fill='%23fff' font-size='24' font-family='Arial'%3E点击"加载视频"开始播放%3C/text%3E%3C/svg%3E">
                     您的浏览器不支持视频标签。
                 </video>
             </div>
 
             <!-- 播放器控制 -->
-            <div class="flex flex-wrap gap-3 justify-center">
-                <button id="playPauseBtn" class="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors" disabled>
-                    <i class="fas fa-play mr-2"></i>播放
+            <div class="flex flex-wrap gap-2 sm:gap-3 justify-center">
+                <button id="playPauseBtn" class="px-3 sm:px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors text-sm sm:text-base" disabled>
+                    <i class="fas fa-play mr-1 sm:mr-2"></i>播放
                 </button>
-                <button id="fullscreenBtn" class="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors" disabled>
-                    <i class="fas fa-expand mr-2"></i>全屏
+                <button id="fullscreenBtn" class="px-3 sm:px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors text-sm sm:text-base" disabled>
+                    <i class="fas fa-expand mr-1 sm:mr-2"></i>全屏
                 </button>
-                <button id="volumeBtn" class="px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors" disabled>
-                    <i class="fas fa-volume-up mr-2"></i>音量
+                <button id="volumeBtn" class="px-3 sm:px-4 py-2 bg-gray-600 text-white rounded-lg hover:bg-gray-700 transition-colors text-sm sm:text-base" disabled>
+                    <i class="fas fa-volume-up mr-1 sm:mr-2"></i>音量
                 </button>
             </div>
 
             <!-- 加载状态 -->
-            <div id="loadingIndicator" class="text-center py-8 hidden">
-                <div class="inline-block animate-spin rounded-full h-8 w-8 border-b-2 border-green-600 mb-4"></div>
-                <p class="text-gray-600">正在加载视频...</p>
+            <div id="loadingIndicator" class="text-center py-6 sm:py-8 hidden">
+                <div class="inline-block animate-spin rounded-full h-6 sm:h-8 w-6 sm:w-8 border-b-2 border-green-600 mb-3 sm:mb-4"></div>
+                <p class="text-gray-600 text-sm sm:text-base">正在加载视频...</p>
             </div>
 
             <!-- 错误状态 -->
-            <div id="errorState" class="text-center py-8 text-red-600 hidden">
-                <i class="fas fa-exclamation-triangle text-4xl mb-4"></i>
-                <p id="errorMessage">视频加载失败，请检查链接后重试。</p>
+            <div id="errorState" class="text-center py-6 sm:py-8 text-red-600 hidden">
+                <i class="fas fa-exclamation-triangle text-2xl sm:text-3xl md:text-4xl mb-3 sm:mb-4"></i>
+                <p id="errorMessage" class="text-sm sm:text-base">视频加载失败，请检查链接后重试。</p>
             </div>
         </div>
 
         <!-- 功能特性 -->
-        <div class="grid md:grid-cols-3 gap-8 mb-12">
-            <div class="bg-white rounded-lg shadow-lg p-6 text-center">
-                <div class="bg-green-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-                    <i class="fas fa-play text-green-600 text-2xl"></i>
+        <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 sm:gap-6 md:gap-8 mb-8 sm:mb-10 md:mb-12">
+            <div class="bg-white rounded-lg shadow-lg p-4 sm:p-6 text-center">
+                <div class="bg-green-100 rounded-full w-12 sm:w-14 md:w-16 h-12 sm:h-14 md:h-16 flex items-center justify-center mx-auto mb-3 sm:mb-4">
+                    <i class="fas fa-play text-green-600 text-lg sm:text-xl md:text-2xl"></i>
                 </div>
-                <h3 class="text-xl font-semibold text-gray-900 mb-3">HLS 流媒体</h3>
-                <p class="text-gray-600">支持HTTP Live Streaming (HLS)协议，具备自适应码率流功能</p>
+                <h3 class="text-lg sm:text-xl font-semibold text-gray-900 mb-2 sm:mb-3">HLS 流媒体</h3>
+                <p class="text-gray-600 text-sm sm:text-base">支持HTTP Live Streaming (HLS)协议，具备自适应码率流功能</p>
             </div>
-            <div class="bg-white rounded-lg shadow-lg p-6 text-center">
-                <div class="bg-green-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-                    <i class="fas fa-expand text-green-600 text-2xl"></i>
+            <div class="bg-white rounded-lg shadow-lg p-4 sm:p-6 text-center">
+                <div class="bg-green-100 rounded-full w-12 sm:w-14 md:w-16 h-12 sm:h-14 md:h-16 flex items-center justify-center mx-auto mb-3 sm:mb-4">
+                    <i class="fas fa-expand text-green-600 text-lg sm:text-xl md:text-2xl"></i>
                 </div>
-                <h3 class="text-xl font-semibold text-gray-900 mb-3">全屏支持</h3>
-                <p class="text-gray-600">支持全屏模式观看视频，提供完整的播放器控制功能</p>
+                <h3 class="text-lg sm:text-xl font-semibold text-gray-900 mb-2 sm:mb-3">全屏支持</h3>
+                <p class="text-gray-600 text-sm sm:text-base">支持全屏模式观看视频，提供完整的播放器控制功能</p>
             </div>
-            <div class="bg-white rounded-lg shadow-lg p-6 text-center">
-                <div class="bg-purple-100 rounded-full w-16 h-16 flex items-center justify-center mx-auto mb-4">
-                    <i class="fas fa-mobile-alt text-purple-600 text-2xl"></i>
+            <div class="bg-white rounded-lg shadow-lg p-4 sm:p-6 text-center">
+                <div class="bg-purple-100 rounded-full w-12 sm:w-14 md:w-16 h-12 sm:h-14 md:h-16 flex items-center justify-center mx-auto mb-3 sm:mb-4">
+                    <i class="fas fa-mobile-alt text-purple-600 text-lg sm:text-xl md:text-2xl"></i>
                 </div>
-                <h3 class="text-xl font-semibold text-gray-900 mb-3">移动端友好</h3>
-                <p class="text-gray-600">针对移动设备优化，提供触控友好的操作界面</p>
+                <h3 class="text-lg sm:text-xl font-semibold text-gray-900 mb-2 sm:mb-3">移动端友好</h3>
+                <p class="text-gray-600 text-sm sm:text-base">针对移动设备优化，提供触控友好的操作界面</p>
             </div>
         </div>
 
         <!-- 使用说明 -->
-        <div class="bg-white rounded-lg shadow-lg p-8">
-            <h2 class="text-2xl font-bold text-gray-900 mb-6">使用说明</h2>
-            <div class="grid md:grid-cols-2 gap-8">
+        <div class="bg-white rounded-lg shadow-lg p-4 sm:p-6 md:p-8">
+            <h2 class="text-xl sm:text-2xl font-bold text-gray-900 mb-4 sm:mb-6">使用说明</h2>
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 sm:gap-8">
                 <div>
-                    <h3 class="text-lg font-semibold text-gray-900 mb-4">操作步骤</h3>
-                    <ol class="space-y-3">
+                    <h3 class="text-base sm:text-lg font-semibold text-gray-900 mb-3 sm:mb-4">操作步骤</h3>
+                    <ol class="space-y-2 sm:space-y-3">
                         <li class="flex items-start">
-                            <span class="bg-green-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold mr-3 mt-0.5">1</span>
-                            <span class="text-gray-700">从视频源复制M3U8视频链接</span>
+                            <span class="bg-green-600 text-white rounded-full w-5 sm:w-6 h-5 sm:h-6 flex items-center justify-center text-xs sm:text-sm font-bold mr-2 sm:mr-3 mt-0.5 flex-shrink-0">1</span>
+                            <span class="text-gray-700 text-sm sm:text-base">从视频源复制M3U8视频链接</span>
                         </li>
                         <li class="flex items-start">
-                            <span class="bg-green-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold mr-3 mt-0.5">2</span>
-                            <span class="text-gray-700">将链接粘贴到上方的输入框中</span>
+                            <span class="bg-green-600 text-white rounded-full w-5 sm:w-6 h-5 sm:h-6 flex items-center justify-center text-xs sm:text-sm font-bold mr-2 sm:mr-3 mt-0.5 flex-shrink-0">2</span>
+                            <span class="text-gray-700 text-sm sm:text-base">将链接粘贴到上方的输入框中</span>
                         </li>
                         <li class="flex items-start">
-                            <span class="bg-green-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold mr-3 mt-0.5">3</span>
-                            <span class="text-gray-700">按回车键或点击"播放"按钮开始播放</span>
+                            <span class="bg-green-600 text-white rounded-full w-5 sm:w-6 h-5 sm:h-6 flex items-center justify-center text-xs sm:text-sm font-bold mr-2 sm:mr-3 mt-0.5 flex-shrink-0">3</span>
+                            <span class="text-gray-700 text-sm sm:text-base">按回车键或点击"播放"按钮开始播放</span>
                         </li>
                         <li class="flex items-start">
-                            <span class="bg-green-600 text-white rounded-full w-6 h-6 flex items-center justify-center text-sm font-bold mr-3 mt-0.5">4</span>
-                            <span class="text-gray-700">使用播放器控制按钮进行播放、暂停或全屏操作</span>
+                            <span class="bg-green-600 text-white rounded-full w-5 sm:w-6 h-5 sm:h-6 flex items-center justify-center text-xs sm:text-sm font-bold mr-2 sm:mr-3 mt-0.5 flex-shrink-0">4</span>
+                            <span class="text-gray-700 text-sm sm:text-base">使用播放器控制按钮进行播放、暂停或全屏操作</span>
                         </li>
                     </ol>
                 </div>
                 <div>
-                    <h3 class="text-lg font-semibold text-gray-900 mb-4">提示与注意事项</h3>
-                    <ul class="space-y-3">
+                    <h3 class="text-base sm:text-lg font-semibold text-gray-900 mb-3 sm:mb-4">提示与注意事项</h3>
+                    <ul class="space-y-2 sm:space-y-3">
                         <li class="flex items-start">
-                            <i class="fas fa-lightbulb text-yellow-500 mr-3 mt-1"></i>
-                            <span class="text-gray-700">确保M3U8链接可访问且未被CORS策略阻止</span>
+                            <i class="fas fa-lightbulb text-yellow-500 mr-2 sm:mr-3 mt-1 text-sm sm:text-base flex-shrink-0"></i>
+                            <span class="text-gray-700 text-sm sm:text-base">确保M3U8链接可访问且未被CORS策略阻止</span>
                         </li>
                         <li class="flex items-start">
-                            <i class="fas fa-shield-alt text-green-500 mr-3 mt-1"></i>
-                            <span class="text-gray-700">建议使用HTTPS链接以获得更好的安全性</span>
+                            <i class="fas fa-shield-alt text-green-500 mr-2 sm:mr-3 mt-1 text-sm sm:text-base flex-shrink-0"></i>
+                            <span class="text-gray-700 text-sm sm:text-base">建议使用HTTPS链接以获得更好的安全性</span>
                         </li>
                         <li class="flex items-start">
-                            <i class="fas fa-wifi text-green-500 mr-3 mt-1"></i>
-                            <span class="text-gray-700">需要稳定的网络连接以确保流畅播放</span>
+                            <i class="fas fa-wifi text-green-500 mr-2 sm:mr-3 mt-1 text-sm sm:text-base flex-shrink-0"></i>
+                            <span class="text-gray-700 text-sm sm:text-base">需要稳定的网络连接以确保流畅播放</span>
                         </li>
                         <li class="flex items-start">
-                            <i class="fas fa-mobile-alt text-purple-500 mr-3 mt-1"></i>
-                            <span class="text-gray-700">支持所有现代浏览器和移动设备</span>
+                            <i class="fas fa-mobile-alt text-purple-500 mr-2 sm:mr-3 mt-1 text-sm sm:text-base flex-shrink-0"></i>
+                            <span class="text-gray-700 text-sm sm:text-base">支持所有现代浏览器和移动设备</span>
                         </li>
                     </ul>
                 </div>

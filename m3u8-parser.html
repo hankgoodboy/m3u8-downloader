@@ -114,79 +114,79 @@
     </nav>
 
     <!-- 主要内容 -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
         <!-- 页面标题 -->
-        <div class="text-center mb-8">
-            <h1 class="text-4xl font-bold text-gray-900 mb-4">
-                <i class="fas fa-search text-green-600 mr-3"></i>
-                M3U8 文件解析器
+        <div class="text-center mb-6 sm:mb-8">
+            <h1 class="text-2xl sm:text-3xl md:text-4xl font-bold text-gray-900 mb-3 sm:mb-4 flex flex-col sm:flex-row items-center justify-center">
+                <i class="fas fa-search text-green-600 mb-2 sm:mb-0 sm:mr-3 text-xl sm:text-2xl md:text-3xl"></i>
+                <span>M3U8 文件解析器</span>
             </h1>
-            <p class="text-lg text-gray-600 max-w-3xl mx-auto">
+            <p class="text-base sm:text-lg text-gray-600 max-w-3xl mx-auto px-2">
                 分析M3U8播放列表文件结构，检查视频片段信息、时长和元数据
             </p>
         </div>
 
         <!-- 解析器区域 -->
-        <div class="bg-white rounded-2xl shadow-lg p-6 mb-8">
+        <div class="bg-white rounded-2xl shadow-lg p-4 sm:p-6 mb-6 sm:mb-8">
             <!-- 输入区域 -->
-            <div class="mb-6">
+            <div class="mb-4 sm:mb-6">
                 <label class="block text-sm font-medium text-gray-700 mb-2" for="parser-url-input">
                     <i class="fas fa-link mr-2"></i>
                     M3U8 文件链接
                 </label>
-                <div class="flex gap-3">
+                <div class="flex flex-col sm:flex-row gap-2 sm:gap-3">
                     <input
-                        class="flex-1 p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                        class="flex-1 p-2 sm:p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500 text-sm sm:text-base"
                         id="parser-url-input" placeholder="请输入M3U8文件链接..." type="url" />
                     <button
-                        class="bg-green-600 hover:bg-green-700 text-white px-6 py-3 rounded-lg font-medium transition-colors duration-300 flex items-center"
+                        class="bg-green-600 hover:bg-green-700 text-white px-4 sm:px-6 py-2 sm:py-3 rounded-lg font-medium transition-colors duration-300 flex items-center justify-center text-sm sm:text-base w-full sm:w-auto"
                         id="parse-btn">
                         <i class="fas fa-search mr-2"></i>
                         解析
                     </button>
                 </div>
-                <p class="text-sm text-gray-500 mt-2">
+                <p class="text-xs sm:text-sm text-gray-500 mt-2 px-1">
                     支持以 .m3u8 结尾的HLS播放列表文件
-                    <button class="text-green-600 hover:underline ml-2" id="fill-demo-parser" type="button">使用示例链接</button>
+                    <button class="text-green-600 hover:underline ml-1 sm:ml-2 font-medium" id="fill-demo-parser" type="button">使用示例链接</button>
                 </p>
             </div>
 
             <!-- 解析结果区域 -->
             <div class="hidden" id="parse-results">
                 <!-- 基本信息 -->
-                <div class="mb-6">
-                    <h3 class="text-lg font-semibold text-gray-900 mb-4">
+                <div class="mb-4 sm:mb-6">
+                    <h3 class="text-base sm:text-lg font-semibold text-gray-900 mb-3 sm:mb-4">
                         <i class="fas fa-info-circle text-blue-600 mr-2"></i>
                         基本信息
                     </h3>
-                    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-                        <div class="bg-blue-50 rounded-lg p-4">
-                            <div class="text-sm text-gray-600">文件类型</div>
-                            <div class="text-lg font-semibold text-gray-900" id="file-type">--</div>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
+                        <div class="bg-blue-50 rounded-lg p-3 sm:p-4">
+                            <div class="text-xs sm:text-sm text-gray-600">文件类型</div>
+                            <div class="text-sm sm:text-lg font-semibold text-gray-900" id="file-type">--</div>
                         </div>
-                        <div class="bg-green-50 rounded-lg p-4">
-                            <div class="text-sm text-gray-600">总时长</div>
-                            <div class="text-lg font-semibold text-gray-900" id="total-duration">--</div>
+                        <div class="bg-green-50 rounded-lg p-3 sm:p-4">
+                            <div class="text-xs sm:text-sm text-gray-600">总时长</div>
+                            <div class="text-sm sm:text-lg font-semibold text-gray-900" id="total-duration">--</div>
                         </div>
-                        <div class="bg-yellow-50 rounded-lg p-4">
-                            <div class="text-sm text-gray-600">片段数量</div>
-                            <div class="text-lg font-semibold text-gray-900" id="segment-count">--</div>
+                        <div class="bg-yellow-50 rounded-lg p-3 sm:p-4">
+                            <div class="text-xs sm:text-sm text-gray-600">片段数量</div>
+                            <div class="text-sm sm:text-lg font-semibold text-gray-900" id="segment-count">--</div>
                         </div>
-                        <div class="bg-purple-50 rounded-lg p-4">
-                            <div class="text-sm text-gray-600">目标时长</div>
-                            <div class="text-lg font-semibold text-gray-900" id="target-duration">--</div>
+                        <div class="bg-purple-50 rounded-lg p-3 sm:p-4">
+                            <div class="text-xs sm:text-sm text-gray-600">目标时长</div>
+                            <div class="text-sm sm:text-lg font-semibold text-gray-900" id="target-duration">--</div>
                         </div>
                     </div>
                 </div>
 
                 <!-- 质量级别 -->
-                <div class="mb-6 hidden" id="quality-levels-section">
-                    <div class="flex justify-between items-center mb-4">
-                        <h3 class="text-lg font-semibold text-gray-900">
+                <div class="mb-4 sm:mb-6 hidden" id="quality-levels-section">
+                    <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-3 sm:mb-4 gap-2">
+                        <h3 class="text-base sm:text-lg font-semibold text-gray-900">
                             <i class="fas fa-layer-group text-purple-600 mr-2"></i>
                             质量级别
                         </h3>
-                        <button class="bg-green-600 hover:bg-green-700 text-white px-3 py-1.5 rounded-md text-sm font-medium transition-colors duration-300 flex items-center" id="copy-quality-btn">
+                        <button class="bg-green-600 hover:bg-green-700 text-white px-3 py-1.5 rounded-md text-xs sm:text-sm font-medium transition-colors duration-300 flex items-center justify-center w-full sm:w-auto" id="copy-quality-btn">
                             <i class="fas fa-copy mr-1.5"></i>
                             复制
                         </button>
@@ -195,10 +195,10 @@
                         <table class="min-w-full bg-white border border-gray-200 rounded-lg">
                             <thead class="bg-gray-50">
                                 <tr>
-                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">分辨率</th>
-                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">码率</th>
-                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">编解码器</th>
-                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">链接</th>
+                                    <th class="px-2 sm:px-4 py-2 sm:py-3 text-left text-xs font-medium text-gray-500 uppercase">分辨率</th>
+                                    <th class="px-2 sm:px-4 py-2 sm:py-3 text-left text-xs font-medium text-gray-500 uppercase">码率</th>
+                                    <th class="px-2 sm:px-4 py-2 sm:py-3 text-left text-xs font-medium text-gray-500 uppercase">编解码器</th>
+                                    <th class="px-2 sm:px-4 py-2 sm:py-3 text-left text-xs font-medium text-gray-500 uppercase">链接</th>
                                 </tr>
                             </thead>
                             <tbody id="quality-levels-table" class="divide-y divide-gray-200">
@@ -208,13 +208,13 @@
                 </div>
 
                 <!-- 视频片段 -->
-                <div class="mb-6">
-                    <div class="flex justify-between items-center mb-4">
-                        <h3 class="text-lg font-semibold text-gray-900">
+                <div class="mb-4 sm:mb-6">
+                    <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-3 sm:mb-4 gap-2">
+                        <h3 class="text-base sm:text-lg font-semibold text-gray-900">
                             <i class="fas fa-film text-orange-600 mr-2"></i>
-                            视频片段 <span class="text-sm text-gray-500" id="segments-info">(显示前10个)</span>
+                            视频片段 <span class="text-xs sm:text-sm text-gray-500" id="segments-info">(显示前10个)</span>
                         </h3>
-                        <button class="bg-green-600 hover:bg-green-700 text-white px-3 py-1.5 rounded-md text-sm font-medium transition-colors duration-300 flex items-center" id="copy-segments-btn">
+                        <button class="bg-green-600 hover:bg-green-700 text-white px-3 py-1.5 rounded-md text-xs sm:text-sm font-medium transition-colors duration-300 flex items-center justify-center w-full sm:w-auto" id="copy-segments-btn">
                             <i class="fas fa-copy mr-1.5"></i>
                             复制
                         </button>
@@ -223,10 +223,10 @@
                         <table class="min-w-full bg-white border border-gray-200 rounded-lg">
                             <thead class="bg-gray-50">
                                 <tr>
-                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">#</th>
-                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">时长</th>
-                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">文件名</th>
-                                    <th class="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase">状态</th>
+                                    <th class="px-2 sm:px-4 py-2 sm:py-3 text-left text-xs font-medium text-gray-500 uppercase">#</th>
+                                    <th class="px-2 sm:px-4 py-2 sm:py-3 text-left text-xs font-medium text-gray-500 uppercase">时长</th>
+                                    <th class="px-2 sm:px-4 py-2 sm:py-3 text-left text-xs font-medium text-gray-500 uppercase">文件名</th>
+                                    <th class="px-2 sm:px-4 py-2 sm:py-3 text-left text-xs font-medium text-gray-500 uppercase">状态</th>
                                 </tr>
                             </thead>
                             <tbody id="segments-table" class="divide-y divide-gray-200">
@@ -236,64 +236,64 @@
                 </div>
 
                 <!-- 原始内容 -->
-                <div class="mb-6">
-                    <div class="flex justify-between items-center mb-4">
-                        <h3 class="text-lg font-semibold text-gray-900">
+                <div class="mb-4 sm:mb-6">
+                    <div class="flex flex-col sm:flex-row sm:justify-between sm:items-center mb-3 sm:mb-4 gap-2">
+                        <h3 class="text-base sm:text-lg font-semibold text-gray-900">
                             <i class="fas fa-code text-gray-600 mr-2"></i>
                             原始内容
                         </h3>
-                        <button class="bg-green-600 hover:bg-green-700 text-white px-3 py-1.5 rounded-md text-sm font-medium transition-colors duration-300 flex items-center" id="copy-raw-btn">
+                        <button class="bg-green-600 hover:bg-green-700 text-white px-3 py-1.5 rounded-md text-xs sm:text-sm font-medium transition-colors duration-300 flex items-center justify-center w-full sm:w-auto" id="copy-raw-btn">
                             <i class="fas fa-copy mr-1.5"></i>
                             复制
                         </button>
                     </div>
-                    <div class="bg-gray-900 rounded-lg p-4 overflow-x-auto">
-                        <pre class="text-green-400 text-sm font-mono whitespace-pre-wrap" id="raw-content"></pre>
+                    <div class="bg-gray-900 rounded-lg p-3 sm:p-4 overflow-x-auto">
+                        <pre class="text-green-400 text-xs sm:text-sm font-mono whitespace-pre-wrap" id="raw-content"></pre>
                     </div>
                 </div>
             </div>
 
             <!-- 加载状态 -->
-            <div class="hidden text-center py-8" id="loading-state">
-                <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600 mx-auto mb-4"></div>
-                <p class="text-lg text-gray-600">正在解析M3U8文件...</p>
+            <div class="hidden text-center py-6 sm:py-8" id="loading-state">
+                <div class="animate-spin rounded-full h-8 sm:h-12 w-8 sm:w-12 border-b-2 border-green-600 mx-auto mb-3 sm:mb-4"></div>
+                <p class="text-base sm:text-lg text-gray-600">正在解析M3U8文件...</p>
             </div>
         </div>
 
         <!-- 功能特性 -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-            <div class="bg-white rounded-xl shadow-lg p-6">
-                <div class="flex items-center mb-4">
-                    <div class="bg-green-100 rounded-lg p-3 mr-4">
-                        <i class="fas fa-search text-green-600 text-xl"></i>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8">
+            <div class="bg-white rounded-xl shadow-lg p-4 sm:p-6">
+                <div class="flex items-center mb-3 sm:mb-4">
+                    <div class="bg-green-100 rounded-lg p-2 sm:p-3 mr-3 sm:mr-4">
+                        <i class="fas fa-search text-green-600 text-lg sm:text-xl"></i>
                     </div>
-                    <h3 class="text-lg font-semibold text-gray-900">深度解析</h3>
+                    <h3 class="text-base sm:text-lg font-semibold text-gray-900">深度解析</h3>
                 </div>
-                <p class="text-gray-600">
+                <p class="text-gray-600 text-sm sm:text-base">
                     详细分析M3U8文件结构，提取所有元数据和片段信息
                 </p>
             </div>
 
-            <div class="bg-white rounded-xl shadow-lg p-6">
-                <div class="flex items-center mb-4">
-                    <div class="bg-blue-100 rounded-lg p-3 mr-4">
-                        <i class="fas fa-layer-group text-blue-600 text-xl"></i>
+            <div class="bg-white rounded-xl shadow-lg p-4 sm:p-6">
+                <div class="flex items-center mb-3 sm:mb-4">
+                    <div class="bg-blue-100 rounded-lg p-2 sm:p-3 mr-3 sm:mr-4">
+                        <i class="fas fa-layer-group text-blue-600 text-lg sm:text-xl"></i>
                     </div>
-                    <h3 class="text-lg font-semibold text-gray-900">多级别支持</h3>
+                    <h3 class="text-base sm:text-lg font-semibold text-gray-900">多级别支持</h3>
                 </div>
-                <p class="text-gray-600">
+                <p class="text-gray-600 text-sm sm:text-base">
                     支持主播放列表和媒体播放列表的解析，识别不同质量级别
                 </p>
             </div>
 
-            <div class="bg-white rounded-xl shadow-lg p-6">
-                <div class="flex items-center mb-4">
-                    <div class="bg-purple-100 rounded-lg p-3 mr-4">
-                        <i class="fas fa-chart-bar text-purple-600 text-xl"></i>
+            <div class="bg-white rounded-xl shadow-lg p-4 sm:p-6">
+                <div class="flex items-center mb-3 sm:mb-4">
+                    <div class="bg-purple-100 rounded-lg p-2 sm:p-3 mr-3 sm:mr-4">
+                        <i class="fas fa-chart-bar text-purple-600 text-lg sm:text-xl"></i>
                     </div>
-                    <h3 class="text-lg font-semibold text-gray-900">统计分析</h3>
+                    <h3 class="text-base sm:text-lg font-semibold text-gray-900">统计分析</h3>
                 </div>
-                <p class="text-gray-600">
+                <p class="text-gray-600 text-sm sm:text-base">
                     提供详细的统计信息，包括总时长、片段数量等关键指标
                 </p>
             </div>

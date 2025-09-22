@@ -112,107 +112,106 @@
         </div>
     </nav>
     <!-- 主内容区域 -->
-    <section class="min-h-screen flex items-center justify-center py-20 px-4" id="home">
+    <section class="min-h-screen flex items-center justify-center py-12 sm:py-16 md:py-20 px-4" id="home">
         <div class="max-w-4xl mx-auto text-center">
             <!-- 主标题 -->
-            <h1 class="text-4xl md:text-6xl font-bold text-gray-900 mb-6 flex items-center justify-center">
-                <i class="fas fa-film text-green-600 mr-4 text-3xl md:text-5xl"></i>
-                M3U8 视频下载器
+            <h1 class="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold text-gray-900 mb-4 sm:mb-6 flex flex-col sm:flex-row items-center justify-center">
+                <i class="fas fa-film text-green-600 mb-2 sm:mb-0 sm:mr-4 text-2xl sm:text-3xl md:text-4xl lg:text-5xl"></i>
+                <span class="text-center">M3U8 视频下载器</span>
             </h1>
             <!-- 描述文字 -->
-            <p class="text-lg md:text-xl text-gray-600 mb-12 max-w-3xl mx-auto leading-relaxed">
+            <p class="text-base sm:text-lg md:text-xl text-gray-600 mb-8 sm:mb-10 md:mb-12 max-w-3xl mx-auto leading-relaxed px-2">
                 M3U8 转换视频文件下载。输入 M3U8 链接，选择分辨率，然后点击下载即可。
             </p>
             <!-- 优点展示 -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 mb-12 max-w-4xl mx-auto">
-                <div class="inline-flex items-center justify-center bg-green-50 rounded-full px-4 py-2">
-                    <i class="fas fa-shield-alt text-green-600 text-base mr-2"></i>
-                    <span class="text-sm font-medium text-gray-600">信息安全</span>
+            <div class="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-4 gap-2 sm:gap-3 mb-8 sm:mb-10 md:mb-12 max-w-4xl mx-auto px-2">
+                <div class="inline-flex items-center justify-center bg-green-50 rounded-full px-2 sm:px-3 md:px-4 py-2">
+                    <i class="fas fa-shield-alt text-green-600 text-xs sm:text-sm md:text-base mr-1 sm:mr-2"></i>
+                    <span class="text-xs sm:text-sm font-medium text-gray-600">信息安全</span>
                 </div>
-                <div class="inline-flex items-center justify-center bg-green-50 rounded-full px-4 py-2">
-                    <i class="fas fa-magic text-green-600 text-base mr-2"></i>
-                    <span class="text-sm font-medium text-gray-600">简单便捷</span>
+                <div class="inline-flex items-center justify-center bg-green-50 rounded-full px-2 sm:px-3 md:px-4 py-2">
+                    <i class="fas fa-magic text-green-600 text-xs sm:text-sm md:text-base mr-1 sm:mr-2"></i>
+                    <span class="text-xs sm:text-sm font-medium text-gray-600">简单便捷</span>
                 </div>
-                <div class="inline-flex items-center justify-center bg-green-50 rounded-full px-4 py-2">
-                    <i class="fas fa-cog text-green-600 text-base mr-2"></i>
-                    <span class="text-sm font-medium text-gray-600">支持多种分辨率</span>
+                <div class="inline-flex items-center justify-center bg-green-50 rounded-full px-2 sm:px-3 md:px-4 py-2">
+                    <i class="fas fa-cog text-green-600 text-xs sm:text-sm md:text-base mr-1 sm:mr-2"></i>
+                    <span class="text-xs sm:text-sm font-medium text-gray-600 text-center">多种分辨率</span>
                 </div>
-                <div class="inline-flex items-center justify-center bg-green-50 rounded-full px-4 py-2">
-                    <i class="fas fa-cloud text-green-600 text-base mr-2"></i>
-                    <span class="text-sm font-medium text-gray-600">无云端存储</span>
+                <div class="inline-flex items-center justify-center bg-green-50 rounded-full px-2 sm:px-3 md:px-4 py-2">
+                    <i class="fas fa-cloud text-green-600 text-xs sm:text-sm md:text-base mr-1 sm:mr-2"></i>
+                    <span class="text-xs sm:text-sm font-medium text-gray-600">无云存储</span>
                 </div>
             </div>
             <!-- 大型拖拽/输入区域 -->
-            <div class="bg-white rounded-2xl shadow-lg border-2 border-dashed border-gray-300 hover:border-blue-400 transition-colors duration-300 p-12 md:p-16 cursor-pointer group"
+            <div class="bg-white rounded-xl sm:rounded-2xl shadow-lg border-2 border-dashed border-gray-300 hover:border-blue-400 transition-colors duration-300 p-6 sm:p-8 md:p-12 lg:p-16 cursor-pointer group"
                 id="drop-zone">
                 <div class="flex flex-col items-center justify-center">
                     <!-- 输入框 -->
                     <div class="w-full max-w-2xl">
                         <input
-                            class="w-full p-5 text-lg border-2 border-gray-300 rounded-2xl focus:outline-none focus:border-blue-500 focus:ring-4 focus:ring-blue-100 text-center shadow-sm hover:shadow-md transition-all duration-300 bg-white"
+                            class="w-full p-3 sm:p-4 md:p-5 text-sm sm:text-base md:text-lg border-2 border-gray-300 rounded-xl sm:rounded-2xl focus:outline-none focus:border-blue-500 focus:ring-2 sm:focus:ring-4 focus:ring-blue-100 text-center shadow-sm hover:shadow-md transition-all duration-300 bg-white"
                             id="url-input" placeholder="输入 M3U8 视频链接地址..." type="url" />
                     </div>
                     <!-- 清晰度选择面板 -->
-                    <div class="hidden mt-4 w-full max-w-2xl mx-auto" id="quality-panel">
+                    <div class="hidden mt-3 sm:mt-4 w-full max-w-2xl mx-auto" id="quality-panel">
                         <div
-                            class="bg-green-50 border border-green-100 rounded-xl px-4 py-3 flex items-center justify-between">
-                            <label class="text-gray-600 text-sm" for="quality-select">选择分辨率：</label>
+                            class="bg-green-50 border border-green-100 rounded-lg sm:rounded-xl px-3 sm:px-4 py-2 sm:py-3 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-2 sm:gap-0">
+                            <label class="text-gray-600 text-xs sm:text-sm font-medium" for="quality-select">选择分辨率：</label>
                             <select
-                                class="text-sm border border-gray-300 rounded-lg px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-200 focus:border-blue-500"
+                                class="text-xs sm:text-sm border border-gray-300 rounded-md sm:rounded-lg px-2 sm:px-3 py-1.5 sm:py-2 focus:outline-none focus:ring-2 focus:ring-blue-200 focus:border-blue-500 w-full sm:w-auto"
                                 id="quality-select"></select>
                         </div>
                     </div>
                     <!-- 清晰度错误提示（局部） -->
-                    <div class="hidden mt-3 w-full max-w-2xl mx-auto bg-red-50 border border-red-200 text-red-700 rounded-xl px-4 py-3"
+                    <div class="hidden mt-2 sm:mt-3 w-full max-w-2xl mx-auto bg-red-50 border border-red-200 text-red-700 rounded-lg sm:rounded-xl px-3 sm:px-4 py-2 sm:py-3 text-sm"
                         id="quality-error"></div>
                     <!-- 提示文字 -->
-                    <p class="text-sm text-gray-500 mt-4">
+                    <p class="text-xs sm:text-sm text-gray-500 mt-3 sm:mt-4 px-2">
                         支持以 .m3u8 结尾的链接地址，示例:
-                        <button class="text-green-600 hover:underline ml-2" id="fill-demo-cn" type="button">测试 M3U8
-                            URL</button>
+                        <button class="text-green-600 hover:underline ml-1 sm:ml-2 font-medium" id="fill-demo-cn" type="button">测试 M3U8 URL</button>
                     </p>
                     
                     <!-- 测试功能按钮 - 弱化处理 -->
-                    <div class="flex flex-wrap justify-center gap-2 mt-4">
+                    <div class="flex flex-wrap justify-center gap-1.5 sm:gap-2 mt-3 sm:mt-4 px-2">
                         <button
-                            class="bg-gray-50 hover:bg-gray-100 text-gray-600 border border-gray-200 px-4 py-1.5 rounded-md font-normal transition-all duration-200 flex items-center text-xs opacity-75 hover:opacity-100"
+                            class="bg-gray-50 hover:bg-gray-100 text-gray-600 border border-gray-200 px-3 sm:px-4 py-1 sm:py-1.5 rounded-md font-normal transition-all duration-200 flex items-center text-xs opacity-75 hover:opacity-100"
                             id="test-play-btn"
                             title="在新窗口中测试播放此链接">
-                            <i class="fas fa-play text-xs mr-1.5"></i>
+                            <i class="fas fa-play text-xs mr-1 sm:mr-1.5"></i>
                             测试播放
                         </button>
                         <button
-                            class="bg-gray-50 hover:bg-gray-100 text-gray-600 border border-gray-200 px-4 py-1.5 rounded-md font-normal transition-all duration-200 flex items-center text-xs opacity-75 hover:opacity-100"
+                            class="bg-gray-50 hover:bg-gray-100 text-gray-600 border border-gray-200 px-3 sm:px-4 py-1 sm:py-1.5 rounded-md font-normal transition-all duration-200 flex items-center text-xs opacity-75 hover:opacity-100"
                             id="test-parse-btn"
                             title="在新窗口中解析此链接详情">
-                            <i class="fas fa-search text-xs mr-1.5"></i>
+                            <i class="fas fa-search text-xs mr-1 sm:mr-1.5"></i>
                             解析地址
                         </button>
                     </div>
                     
                     <!-- 操作按钮 -->
 
-                    <div class="hidden w-full mx-auto mt-6" id="progress-wrap">
+                    <div class="hidden w-full mx-auto mt-4 sm:mt-6 px-2" id="progress-wrap">
                         <div class="flex items-center justify-between mb-1">
-                            <span class="text-sm text-gray-700" id="progress-text">准备中…</span>
-                            <span class="text-sm text-gray-600" id="progress-percent">0%</span>
+                            <span class="text-xs sm:text-sm text-gray-700" id="progress-text">准备中…</span>
+                            <span class="text-xs sm:text-sm text-gray-600" id="progress-percent">0%</span>
                         </div>
-                        <div class="w-full rounded-full h-3 bg-green-50 shadow-inner"
+                        <div class="w-full rounded-full h-2 sm:h-3 bg-green-50 shadow-inner"
                             style="--tw-shadow-color: rgba(16,185,129,.25)">
-                            <div class="h-3 rounded-full" id="progress-bar"
+                            <div class="h-2 sm:h-3 rounded-full" id="progress-bar"
                                 style="width:0%;background-image:linear-gradient(90deg,#10b981,#16a34a);box-shadow:0 0 0 1px rgba(16,185,129,.35) inset,0 0 12px rgba(16,185,129,.25);position:relative;overflow:hidden">
                             </div>
                         </div>
                     </div>
-                    <div class="flex flex-wrap justify-center gap-4 mt-10">
+                    <div class="flex flex-col sm:flex-row flex-wrap justify-center gap-3 sm:gap-4 mt-6 sm:mt-8 md:mt-10 px-2">
                         <button
-                            class="bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white px-10 py-4 rounded-xl font-semibold transition-all duration-300 flex items-center shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
+                            class="bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white px-6 sm:px-8 md:px-10 py-3 sm:py-4 rounded-lg sm:rounded-xl font-semibold transition-all duration-300 flex items-center justify-center shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 w-full sm:w-auto"
                             id="download-btn">
-                            <i class="fas fa-download mr-3 text-lg"></i>
+                            <i class="fas fa-download mr-2 sm:mr-3 text-base sm:text-lg"></i>
                             立即下载
                         </button>
                         <button
-                            class="bg-white hover:bg-gray-50 text-gray-700 border-2 border-gray-200 hover:border-gray-300 px-8 py-4 rounded-xl font-medium transition-all duration-300 flex items-center shadow-md hover:shadow-lg"
+                            class="bg-white hover:bg-gray-50 text-gray-700 border-2 border-gray-200 hover:border-gray-300 px-6 sm:px-8 py-3 sm:py-4 rounded-lg sm:rounded-xl font-medium transition-all duration-300 flex items-center justify-center shadow-md hover:shadow-lg w-full sm:w-auto"
                             id="clear-btn">
                             <i class="fas fa-eraser mr-2"></i>
                             清空输入
@@ -223,31 +222,31 @@
         </div>
     </section>
     <!-- 下载状态提示 -->
-    <div class="hidden fixed top-20 left-1/2 transform -translate-x-1/2 z-50 bg-white rounded-lg shadow-lg p-6 border"
+    <div class="hidden fixed top-16 sm:top-20 left-1/2 transform -translate-x-1/2 z-50 bg-white rounded-lg shadow-lg p-4 sm:p-6 border mx-4 max-w-sm sm:max-w-md w-full sm:w-auto"
         id="download-status">
         <div class="flex items-center justify-center">
-            <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-600 mr-4"></div>
+            <div class="animate-spin rounded-full h-6 sm:h-8 w-6 sm:w-8 border-b-2 border-blue-600 mr-3 sm:mr-4"></div>
             <div class="flex flex-col">
-                <span class="text-lg" id="downloading-text">正在下载中...</span>
-                <span class="text-sm text-gray-600 mt-1" id="resolution-info"></span>
+                <span class="text-base sm:text-lg font-medium" id="downloading-text">正在下载中...</span>
+                <span class="text-xs sm:text-sm text-gray-600 mt-1" id="resolution-info"></span>
             </div>
         </div>
     </div>
     <!-- 错误提示 -->
-    <div class="hidden fixed top-20 left-1/2 transform -translate-x-1/2 z-50 bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded-lg"
+    <div class="hidden fixed top-16 sm:top-20 left-1/2 transform -translate-x-1/2 z-50 bg-red-100 border border-red-400 text-red-700 px-3 sm:px-4 py-2 sm:py-3 rounded-lg mx-4 max-w-sm sm:max-w-md w-full sm:w-auto text-sm"
         id="error-message"></div>
     <!-- 播放器区域 -->
-    <div class="hidden fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center p-4"
+    <div class="hidden fixed inset-0 z-50 bg-black bg-opacity-50 flex items-center justify-center p-2 sm:p-4"
         id="video-player">
-        <div class="bg-white rounded-lg p-6 max-w-4xl w-full">
-            <div class="flex justify-between items-center mb-4">
-                <h3 class="text-xl font-bold text-gray-900">M3U8 视频播放</h3>
-                <button class="text-gray-500 hover:text-gray-700" id="close-player">
-                    <i class="fas fa-times text-xl"></i>
+        <div class="bg-white rounded-lg p-4 sm:p-6 max-w-4xl w-full max-h-full overflow-y-auto">
+            <div class="flex justify-between items-center mb-3 sm:mb-4">
+                <h3 class="text-lg sm:text-xl font-bold text-gray-900">M3U8 视频播放</h3>
+                <button class="text-gray-500 hover:text-gray-700 p-1" id="close-player">
+                    <i class="fas fa-times text-lg sm:text-xl"></i>
                 </button>
             </div>
             <div class="relative bg-black rounded-lg overflow-hidden">
-                <div class="w-full h-96" id="m3u8-player"></div>
+                <div class="w-full h-48 sm:h-64 md:h-80 lg:h-96" id="m3u8-player"></div>
             </div>
         </div>
     </div>
